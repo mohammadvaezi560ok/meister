@@ -1,0 +1,172 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 68
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "comparison-table": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "left_title": "Ergonomische Konturform",
+            "left_text": "Passt sich genau zwischen die Knie an und hält Hüfte, Becken und Wirbelsäule in einer Linie.",
+            "right_title": "Flach und formlos",
+            "right_text": "Normale Kissen verrutschen, fallen zusammen und bieten keine gezielte Unterstützung."
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "left_title": "Hochwertiger Memory-Schaum",
+            "left_text": "Formt sich nach deinem Körper und kehrt jeden Morgen in seine ursprüngliche Form zurück.",
+            "right_title": "Billige Füllung",
+            "right_text": "Watte oder Schaumflocken klumpen schnell und verlieren nach wenigen Wochen ihre Form."
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "left_title": "Atmungsaktiver, waschbarer Bezug",
+            "left_text": "Abnehmbarer Bezug für ein frisches, hygienisches Schlafgefühl – einfach in die Waschmaschine.",
+            "right_title": "Kein abnehmbarer Bezug",
+            "right_text": "Schwer zu reinigen und staut Wärme, was zu unruhigem Schlaf führt."
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "left_title": "Spürbare Entlastung (Seitenschläfer)",
+            "left_text": "Reduziert den Druck auf Hüfte, Knie und unteren Rücken – für erholsamen Schlaf, Nacht für Nacht.",
+            "right_title": "Überteuert",
+            "right_text": "Orthopädische Spezialkissen kosten oft 50 €+ – mit Funktionen, die du gar nicht brauchst."
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ],
+      "settings": {
+        "eyebrow": "Was macht Modava anders?",
+        "heading": "Gebaut für echte Erholung.",
+        "subheading": "Ergonomische Form schlägt gewöhnliche Kissen. Jede Nacht.",
+        "left_label": "Modava",
+        "right_label": "Andere Kissen",
+        "show_annotation": true,
+        "annotation": "Die beste Lösung",
+        "page_bg": "#111216",
+        "frame_bg": "#1c1d22",
+        "left_bg": "#ffffff",
+        "right_bg": "#131418",
+        "x_color": "#e5484d",
+        "annotation_color": "#e23fd3",
+        "padding_top": 52,
+        "padding_bottom": 24
+      }
+    }
+  },
+  "order": [
+    "main",
+    "disclosures",
+    "related-products",
+    "comparison-table"
+  ]
+}
