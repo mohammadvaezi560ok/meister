@@ -152,14 +152,21 @@
         "right_label": "Andere Kissen",
         "show_annotation": true,
         "annotation": "Die beste Lösung",
-        "page_bg": "#111216",
-        "frame_bg": "#1c1d22",
+        "frame_bg": "#ece4d8",
         "left_bg": "#ffffff",
-        "right_bg": "#131418",
+        "right_bg": "#2e2a39",
         "x_color": "#e5484d",
-        "annotation_color": "#e23fd3",
+        "annotation_color": "#9b046f",
         "padding_top": 52,
-        "padding_bottom": 24
+        "padding_bottom": 24,
+        "eyebrow_color": "#9b046f",
+        "heading_color": "#2e2a39",
+        "sub_color": "#5c5866",
+        "left_title_color": "#2e2a39",
+        "left_text_color": "#6b6776",
+        "check_color": "#9b046f",
+        "right_title_color": "#fdfbf7",
+        "right_text_color": "#c9c4d2"
       }
     }
   },

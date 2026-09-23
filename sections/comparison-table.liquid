@@ -4,7 +4,7 @@
   Alle Texte, Bilder und Farben sind im Theme-Editor anpassbar.
 {%- endcomment -%}
 
-{{ 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Gochi+Hand&display=swap' | stylesheet_tag }}
+{{ 'https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap' | stylesheet_tag }}
 
 {%- assign sid = section.id -%}
 {%- assign left_image = section.settings.left_image | default: product.featured_media.preview_image -%}
@@ -17,11 +17,19 @@
     --ct-right-bg: {{ section.settings.right_bg }};
     --ct-accent: {{ section.settings.annotation_color }};
     --ct-red: {{ section.settings.x_color }};
-    background: var(--ct-page-bg);
+    --ct-check: {{ section.settings.check_color }};
+    --ct-eyebrow: {{ section.settings.eyebrow_color }};
+    --ct-heading: {{ section.settings.heading_color }};
+    --ct-sub: {{ section.settings.sub_color }};
+    --ct-left-title: {{ section.settings.left_title_color }};
+    --ct-left-text: {{ section.settings.left_text_color }};
+    --ct-right-title: {{ section.settings.right_title_color }};
+    --ct-right-text: {{ section.settings.right_text_color }};
+    background: {% if section.settings.page_bg != blank %}var(--ct-page-bg){% else %}transparent{% endif %};
     padding: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px 16px {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-body-family, 'Poppins'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: #fff;
+    color: var(--ct-heading);
   }
   @media screen and (min-width: 750px) {
     #ct-{{ sid }} {
@@ -40,18 +48,18 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #9a9ba1;
+    color: var(--ct-eyebrow);
   }
   #ct-{{ sid }} .ct__heading {
     margin: 0 0 14px;
-    font-family: inherit;
+    font-family: var(--font-heading-family, inherit);
     font-size: 34px;
     line-height: 1.1;
     font-weight: 700;
     letter-spacing: -0.025em;
-    color: #fff;
+    color: var(--ct-heading);
   }
-  #ct-{{ sid }} .ct__sub { margin: 0; font-size: 14px; line-height: 1.5; color: #c7c8cc; }
+  #ct-{{ sid }} .ct__sub { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ct-sub); }
 
   #ct-{{ sid }} .ct__wrap { position: relative; max-width: 868px; margin: 0 auto; }
 
@@ -92,9 +100,9 @@
   }
 
   #ct-{{ sid }} .ct__cell { padding: 20px 18px; }
-  #ct-{{ sid }} .ct__cell--left { background: var(--ct-left-bg); color: #111; }
-  #ct-{{ sid }} .ct__cell--right { background: var(--ct-right-bg); color: #fff; }
-  #ct-{{ sid }} .ct__cell--left:not(.ct__cell--last) { border-bottom: 1px solid #ececec; }
+  #ct-{{ sid }} .ct__cell--left { background: var(--ct-left-bg); color: var(--ct-left-title); }
+  #ct-{{ sid }} .ct__cell--right { background: var(--ct-right-bg); color: var(--ct-right-title); }
+  #ct-{{ sid }} .ct__cell--left:not(.ct__cell--last) { border-bottom: 1px solid rgba(46, 42, 57, 0.08); }
   #ct-{{ sid }} .ct__cell--top { border-radius: 6px 6px 0 0; }
   #ct-{{ sid }} .ct__cell--last { border-radius: 0 0 6px 6px; }
 
@@ -109,8 +117,8 @@
     align-items: center;
     justify-content: center;
   }
-  #ct-{{ sid }} .ct__cell--left .ct__thumb { background: #f2f2f2; }
-  #ct-{{ sid }} .ct__cell--right .ct__thumb { background: #202126; }
+  #ct-{{ sid }} .ct__cell--left .ct__thumb { background: rgba(46, 42, 57, 0.05); }
+  #ct-{{ sid }} .ct__cell--right .ct__thumb { background: rgba(255, 255, 255, 0.08); }
   #ct-{{ sid }} .ct__thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
   #ct-{{ sid }} .ct__thumb svg { width: 70%; height: 70%; }
   #ct-{{ sid }} .ct__label {
@@ -120,8 +128,8 @@
     letter-spacing: 0.01em;
     text-transform: uppercase;
   }
-  #ct-{{ sid }} .ct__cell--left .ct__label { color: #111; }
-  #ct-{{ sid }} .ct__cell--right .ct__label { color: #fff; }
+  #ct-{{ sid }} .ct__cell--left .ct__label { color: var(--ct-left-title); }
+  #ct-{{ sid }} .ct__cell--right .ct__label { color: var(--ct-right-title); }
 
   #ct-{{ sid }} .ct__row { display: flex; align-items: flex-start; gap: 11px; }
   #ct-{{ sid }} .ct__icon {
@@ -135,14 +143,14 @@
     margin-top: -1px;
   }
   #ct-{{ sid }} .ct__icon svg { width: 12px; height: 12px; }
-  #ct-{{ sid }} .ct__icon--check { background: #111; color: #fff; }
+  #ct-{{ sid }} .ct__icon--check { background: var(--ct-check); color: #fff; }
   #ct-{{ sid }} .ct__icon--x { background: var(--ct-red); color: #fff; }
   #ct-{{ sid }} .ct__title { margin: 0 0 4px; font-size: 15px; line-height: 1.35; font-weight: 600; letter-spacing: -0.005em; }
   #ct-{{ sid }} .ct__text { margin: 0; font-size: 12.5px; line-height: 1.55; }
-  #ct-{{ sid }} .ct__cell--left .ct__title { color: #111; }
-  #ct-{{ sid }} .ct__cell--left .ct__text { color: #6b6b6b; }
-  #ct-{{ sid }} .ct__cell--right .ct__title { color: #fff; }
-  #ct-{{ sid }} .ct__cell--right .ct__text { color: #b9bac0; }
+  #ct-{{ sid }} .ct__cell--left .ct__title { color: var(--ct-left-title); }
+  #ct-{{ sid }} .ct__cell--left .ct__text { color: var(--ct-left-text); }
+  #ct-{{ sid }} .ct__cell--right .ct__title { color: var(--ct-right-title); }
+  #ct-{{ sid }} .ct__cell--right .ct__text { color: var(--ct-right-text); }
 
   @media screen and (max-width: 749px) {
     #ct-{{ sid }} .ct__head { margin-bottom: 28px; }
@@ -204,8 +212,8 @@
               {{ section.settings.right_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: section.settings.right_label }}
             {%- else -%}
               <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-                <rect x="8" y="20" width="48" height="26" rx="10" fill="#3a3b42"/>
-                <path d="M14 27c6 3 30 3 36 0M14 39c6-3 30-3 36 0" stroke="#55565e" stroke-width="2" stroke-linecap="round"/>
+                <rect x="8" y="20" width="48" height="26" rx="10" fill="rgba(255,255,255,0.14)"/>
+                <path d="M14 27c6 3 30 3 36 0M14 39c6-3 30-3 36 0" stroke="rgba(255,255,255,0.22)" stroke-width="2" stroke-linecap="round"/>
               </svg>
             {%- endif -%}
           </div>
@@ -265,12 +273,20 @@
     { "type": "checkbox", "id": "show_annotation", "label": "Hinweis anzeigen (nur Desktop)", "default": true },
     { "type": "text", "id": "annotation", "label": "Text", "default": "Die beste Lösung" },
     { "type": "header", "content": "Farben" },
-    { "type": "color", "id": "page_bg", "label": "Hintergrund", "default": "#111216" },
-    { "type": "color", "id": "frame_bg", "label": "Tabellenrahmen", "default": "#1c1d22" },
+    { "type": "color", "id": "page_bg", "label": "Hintergrund", "info": "Leer lassen = Hintergrund des Shops" },
+    { "type": "color", "id": "eyebrow_color", "label": "Überzeile", "default": "#9b046f" },
+    { "type": "color", "id": "heading_color", "label": "Überschrift", "default": "#2e2a39" },
+    { "type": "color", "id": "sub_color", "label": "Unterzeile", "default": "#5c5866" },
+    { "type": "color", "id": "frame_bg", "label": "Tabellenrahmen", "default": "#ece4d8" },
     { "type": "color", "id": "left_bg", "label": "Linke Spalte", "default": "#ffffff" },
-    { "type": "color", "id": "right_bg", "label": "Rechte Spalte", "default": "#131418" },
+    { "type": "color", "id": "left_title_color", "label": "Linke Spalte: Titel", "default": "#2e2a39" },
+    { "type": "color", "id": "left_text_color", "label": "Linke Spalte: Text", "default": "#6b6776" },
+    { "type": "color", "id": "check_color", "label": "Häkchen-Symbol", "default": "#9b046f" },
+    { "type": "color", "id": "right_bg", "label": "Rechte Spalte", "default": "#2e2a39" },
+    { "type": "color", "id": "right_title_color", "label": "Rechte Spalte: Titel", "default": "#fdfbf7" },
+    { "type": "color", "id": "right_text_color", "label": "Rechte Spalte: Text", "default": "#c9c4d2" },
     { "type": "color", "id": "x_color", "label": "X-Symbol", "default": "#e5484d" },
-    { "type": "color", "id": "annotation_color", "label": "Handschrift-Hinweis", "default": "#e23fd3" },
+    { "type": "color", "id": "annotation_color", "label": "Handschrift-Hinweis", "default": "#9b046f" },
     { "type": "header", "content": "Abstände" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 52 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 24 }
