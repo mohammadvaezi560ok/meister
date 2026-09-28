@@ -273,11 +273,12 @@
                 else
                   assign img_loading = 'lazy'
                 endif
+                assign img_alt = media.alt | default: p.title
               -%}
               {{
                 media.preview_image
                 | image_url: width: 1400
-                | image_tag: loading: img_loading, sizes: '(min-width: 990px) 55vw, 100vw', widths: '500, 800, 1100, 1400', alt: media.alt | default: p.title
+                | image_tag: loading: img_loading, sizes: '(min-width: 990px) 55vw, 100vw', widths: '500, 800, 1100, 1400', alt: img_alt
               }}
             </div>
           {%- else -%}
