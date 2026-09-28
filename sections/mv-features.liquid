@@ -1,0 +1,244 @@
+{%- comment -%}
+  "Was uns anders macht" – Karten mit Icon, Titel und Text als Slider
+  (Desktop 3 pro Ansicht, Handy 1), mit Pfeilen und Punkten.
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+{%- assign heading_font_bold = settings.type_header_font | font_modify: 'weight', 'bold' -%}
+
+<style>
+  {{ heading_font_bold | font_face: font_display: 'swap' }}
+
+  #mvf-{{ sid }} {
+    --mvf-heading: {{ section.settings.heading_color }};
+    --mvf-card-bg: {{ section.settings.card_bg }};
+    --mvf-title: {{ section.settings.title_color }};
+    --mvf-text: {{ section.settings.text_color }};
+    --mvf-icon: {{ section.settings.icon_color }};
+    background: {{ section.settings.bg }};
+    padding: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px 0 {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #mvf-{{ sid }} { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+  }
+  #mvf-{{ sid }} .mvf__heading {
+    margin: 0 0 32px;
+    padding: 0 20px;
+    text-align: center;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: clamp(26px, 3.6vw, 44px);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--mvf-heading);
+  }
+  @media screen and (min-width: 750px) { #mvf-{{ sid }} .mvf__heading { margin-bottom: 40px; } }
+
+  #mvf-{{ sid }} .mvf__wrap { position: relative; max-width: var(--page-width, 1200px); margin: 0 auto; padding: 0 20px; }
+  @media screen and (min-width: 990px) { #mvf-{{ sid }} .mvf__wrap { padding: 0 5rem; } }
+
+  #mvf-{{ sid }} .mvf__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 86%;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 2px 0 6px;
+    margin: 0;
+    list-style: none;
+  }
+  #mvf-{{ sid }} .mvf__track::-webkit-scrollbar { display: none; }
+  @media screen and (min-width: 750px) { #mvf-{{ sid }} .mvf__track { grid-auto-columns: calc((100% - 24px) / 2); gap: 24px; } }
+  @media screen and (min-width: 990px) { #mvf-{{ sid }} .mvf__track { grid-auto-columns: calc((100% - 80px) / 3); gap: 40px; } }
+
+  #mvf-{{ sid }} .mvf__card {
+    scroll-snap-align: start;
+    background: var(--mvf-card-bg);
+    border-radius: 22px;
+    padding: 30px 26px 32px;
+    text-align: center;
+  }
+  #mvf-{{ sid }} .mvf__icon { width: 58px; height: 58px; margin: 0 auto 16px; color: var(--mvf-icon); }
+  #mvf-{{ sid }} .mvf__icon svg { width: 100%; height: 100%; display: block; }
+  #mvf-{{ sid }} .mvf__title {
+    margin: 0 0 12px;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    color: var(--mvf-title);
+  }
+  #mvf-{{ sid }} .mvf__text { margin: 0; font-size: 15.5px; line-height: 1.8; letter-spacing: 0.03em; color: var(--mvf-text); }
+
+  #mvf-{{ sid }} .mvf__arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: var(--mvf-title);
+    cursor: pointer;
+    padding: 8px;
+  }
+  #mvf-{{ sid }} .mvf__arrow[disabled] { opacity: 0.3; cursor: default; }
+  #mvf-{{ sid }} .mvf__arrow svg { width: 100%; height: 100%; display: block; }
+  #mvf-{{ sid }} .mvf__arrow--prev { left: 1.5rem; }
+  #mvf-{{ sid }} .mvf__arrow--next { right: 1.5rem; }
+  @media screen and (min-width: 990px) { #mvf-{{ sid }} .mvf__arrow { display: block; } }
+
+  #mvf-{{ sid }} .mvf__dots { display: flex; justify-content: center; gap: 10px; margin-top: 24px; }
+  #mvf-{{ sid }} .mvf__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--mvf-title);
+    opacity: 0.25;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  #mvf-{{ sid }} .mvf__dot[aria-current='true'] { opacity: 1; transform: scale(1.25); }
+</style>
+
+<div id="mvf-{{ sid }}" class="mvf">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="mvf__heading">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  <div class="mvf__wrap">
+    <button type="button" class="mvf__arrow mvf__arrow--prev" data-prev aria-label="Zurück">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+
+    <ul class="mvf__track" data-track>
+      {%- for block in section.blocks -%}
+        <li class="mvf__card" {{ block.shopify_attributes }}>
+          <div class="mvf__icon" aria-hidden="true">
+            {%- if block.settings.custom_icon != blank -%}
+              {{ block.settings.custom_icon | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {%- render 'mv-icon', icon: block.settings.icon -%}
+            {%- endif -%}
+          </div>
+          <h3 class="mvf__title">{{ block.settings.title | escape }}</h3>
+          <p class="mvf__text">{{ block.settings.text | escape }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <button type="button" class="mvf__arrow mvf__arrow--next" data-next aria-label="Weiter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+
+    <div class="mvf__dots" data-dots></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('mvf-{{ sid }}');
+    if (!root) return;
+    var track = root.querySelector('[data-track]');
+    var prev = root.querySelector('[data-prev]');
+    var next = root.querySelector('[data-next]');
+    var dotsWrap = root.querySelector('[data-dots]');
+    var cards = track.children;
+
+    function perView() {
+      if (!cards.length) return 1;
+      return Math.max(1, Math.round(track.clientWidth / cards[0].getBoundingClientRect().width));
+    }
+    function pageCount() { return Math.max(1, Math.ceil(cards.length / perView())); }
+    function currentPage() {
+      var max = track.scrollWidth - track.clientWidth;
+      if (max <= 0) return 0;
+      return Math.round((track.scrollLeft / max) * (pageCount() - 1));
+    }
+    function goTo(page) {
+      var target = cards[Math.min(page * perView(), cards.length - 1)];
+      if (target) track.scrollTo({ left: target.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    }
+    function renderDots() {
+      var count = pageCount();
+      dotsWrap.innerHTML = '';
+      dotsWrap.hidden = count < 2;
+      for (var i = 0; i < count; i++) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'mvf__dot';
+        dot.setAttribute('aria-label', 'Seite ' + (i + 1));
+        dot.addEventListener('click', goTo.bind(null, i));
+        dotsWrap.appendChild(dot);
+      }
+      update();
+    }
+    function update() {
+      var page = currentPage();
+      Array.prototype.forEach.call(dotsWrap.children, function (dot, i) {
+        dot.setAttribute('aria-current', i === page ? 'true' : 'false');
+      });
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+    prev.addEventListener('click', function () { goTo(Math.max(0, currentPage() - 1)); });
+    next.addEventListener('click', function () { goTo(Math.min(pageCount() - 1, currentPage() + 1)); });
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener('resize', renderDots);
+    renderDots();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Vorteile-Slider (Modava)",
+  "tag": "section",
+  "class": "section section-mv-features",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Was uns anders macht" },
+    { "type": "header", "content": "Farben" },
+    { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#ffffff" },
+    { "type": "color", "id": "heading_color", "label": "Überschrift", "default": "#0d1b4f" },
+    { "type": "color", "id": "card_bg", "label": "Karten-Hintergrund", "default": "#f3f3f3" },
+    { "type": "color", "id": "icon_color", "label": "Icon", "default": "#111111" },
+    { "type": "color", "id": "title_color", "label": "Karten-Titel", "default": "#1a1a1a" },
+    { "type": "color", "id": "text_color", "label": "Karten-Text", "default": "#3d3d3d" },
+    { "type": "header", "content": "Abstände" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Karte",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "spine", "options": [
+          { "value": "spine", "label": "Wirbelsäule" },
+          { "value": "moon", "label": "Mond / Schlaf" },
+          { "value": "foam", "label": "Schaum / Schichten" },
+          { "value": "wash", "label": "Waschbar" },
+          { "value": "heart", "label": "Herz" },
+          { "value": "leaf", "label": "Blatt" },
+          { "value": "shield", "label": "Schild" },
+          { "value": "truck", "label": "Versand" },
+          { "value": "check", "label": "Häkchen" }
+        ] },
+        { "type": "image_picker", "id": "custom_icon", "label": "Eigenes Icon (optional)" },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Vorteil" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Beschreibe hier einen Vorteil deines Produkts." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Vorteile-Slider (Modava)", "blocks": [ { "type": "card" }, { "type": "card" }, { "type": "card" } ] }
+  ]
+}
+{% endschema %}

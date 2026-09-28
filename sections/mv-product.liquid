@@ -1,0 +1,776 @@
+{%- comment -%}
+  Produktbereich im Stil des Vorlage-Shops: Galerie mit Thumbnails links,
+  rechts Bewertungszeile, Titel, Vorteile-Liste und Mengen-Angebote
+  (1 / 2 / 3 Stück) mit Farbwahl pro Stück.
+
+  Wichtig: Der Rabatt eines Angebots wird hier nur ANGEZEIGT. Damit er an der
+  Kasse auch abgezogen wird, muss es in Shopify einen passenden automatischen
+  Rabatt geben (Rabatte → "Mengenrabatt", z. B. ab 2 Stück 20 %).
+
+  Funktioniert auf der Produktseite (nutzt das aktuelle Produkt) und auf jeder
+  anderen Seite (Produkt in den Section-Einstellungen wählen).
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign p = section.settings.product | default: product
+  assign heading_font_bold = settings.type_header_font | font_modify: 'weight', 'bold'
+  assign name_lines = section.settings.value_names | newline_to_br | split: '<br />'
+
+  assign default_variant = p.selected_or_first_available_variant
+  assign base_price = default_variant.price
+  assign base_compare = default_variant.compare_at_price | default: 0
+  if base_compare < base_price
+    assign base_compare = base_price
+  endif
+
+  assign offer_blocks = section.blocks | where: 'type', 'offer'
+  assign benefit_blocks = section.blocks | where: 'type', 'benefit'
+  assign selected_index = 0
+  for block in offer_blocks
+    if block.settings.selected
+      assign selected_index = forloop.index0
+      break
+    endif
+  endfor
+
+  if template.name == 'product'
+    assign title_tag = 'h1'
+  else
+    assign title_tag = 'h2'
+  endif
+-%}
+
+<style>
+  {{ heading_font_bold | font_face: font_display: 'swap' }}
+
+  #mvp-{{ sid }} {
+    --mvp-accent: {{ section.settings.accent }};
+    --mvp-accent-soft: {{ section.settings.accent_soft }};
+    --mvp-text: {{ section.settings.text_color }};
+    --mvp-muted: #5f6470;
+    --mvp-border: #d5d9e2;
+    --mvp-star: {{ section.settings.star_color }};
+    --mvp-perk: {{ section.settings.perk_color }};
+    background: {{ section.settings.bg }};
+    color: var(--mvp-text);
+    padding: {{ section.settings.padding_top | times: 0.6 | round: 0 }}px 0 {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #mvp-{{ sid }} { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+  }
+  #mvp-{{ sid }} *, #mvp-{{ sid }} *::before, #mvp-{{ sid }} *::after { box-sizing: border-box; }
+  #mvp-{{ sid }} .mvp__grid {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 16px;
+    display: grid;
+    gap: 24px;
+  }
+  @media screen and (min-width: 990px) {
+    #mvp-{{ sid }} .mvp__grid { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 48px; padding: 0 5rem; align-items: start; }
+    #mvp-{{ sid }} .mvp__gallery { position: sticky; top: 24px; }
+  }
+
+  /* ---------- Galerie ---------- */
+  #mvp-{{ sid }} .mvp__main {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    border-radius: 14px;
+    background: #f5f5f5;
+  }
+  #mvp-{{ sid }} .mvp__main::-webkit-scrollbar { display: none; }
+  #mvp-{{ sid }} .mvp__slide { scroll-snap-align: start; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; }
+  #mvp-{{ sid }} .mvp__slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  #mvp-{{ sid }} .mvp__thumbs-row { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+  #mvp-{{ sid }} .mvp__thumbs {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 2px;
+  }
+  #mvp-{{ sid }} .mvp__thumbs::-webkit-scrollbar { display: none; }
+  #mvp-{{ sid }} .mvp__thumb {
+    flex: 0 0 calc((100% - 40px) / 5);
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
+    cursor: pointer;
+  }
+  #mvp-{{ sid }} .mvp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #mvp-{{ sid }} .mvp__thumb[aria-current='true'] { border: 2px solid var(--mvp-text); }
+  #mvp-{{ sid }} .mvp__nav {
+    flex: 0 0 28px;
+    height: 28px;
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: var(--mvp-text);
+    cursor: pointer;
+  }
+  #mvp-{{ sid }} .mvp__nav svg { width: 100%; height: 100%; display: block; }
+  #mvp-{{ sid }} .mvp__nav[disabled] { opacity: 0.3; cursor: default; }
+
+  /* ---------- Infos ---------- */
+  #mvp-{{ sid }} .mvp__rating { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 14px; letter-spacing: 0.02em; }
+  #mvp-{{ sid }} .mvp__stars { display: inline-flex; gap: 1px; color: var(--mvp-star); }
+  #mvp-{{ sid }} .mvp__stars svg { width: 15px; height: 15px; display: block; }
+  #mvp-{{ sid }} .mvp__title {
+    margin: 0 0 8px;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: clamp(21px, 2.2vw, 26px);
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: var(--mvp-text);
+  }
+  #mvp-{{ sid }} .mvp__subtitle { margin: 0; font-size: 15px; letter-spacing: 0.03em; color: #2f3440; }
+  #mvp-{{ sid }} .mvp__rule { border: 0; border-top: 1px solid var(--mvp-border); margin: 16px 0 18px; }
+
+  #mvp-{{ sid }} .mvp__benefits { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 12px; }
+  #mvp-{{ sid }} .mvp__benefit { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; }
+  #mvp-{{ sid }} .mvp__benefit-icon { width: 18px; height: 18px; margin-top: 2px; border-radius: 50%; background: var(--mvp-accent); color: #fff; display: flex; align-items: center; justify-content: center; }
+  #mvp-{{ sid }} .mvp__benefit-icon svg { width: 10px; height: 10px; }
+  #mvp-{{ sid }} .mvp__benefit-title { margin: 0; font-size: 15.5px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.35; }
+  #mvp-{{ sid }} .mvp__benefit-text { margin: 2px 0 0; font-size: 14px; letter-spacing: 0.02em; color: var(--mvp-muted); line-height: 1.45; }
+
+  #mvp-{{ sid }} .mvp__divider { display: flex; align-items: center; gap: 12px; margin: 4px 0 16px; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  #mvp-{{ sid }} .mvp__divider::before, #mvp-{{ sid }} .mvp__divider::after { content: ''; flex: 1; height: 1px; background: var(--mvp-accent); opacity: 0.45; }
+
+  /* ---------- Angebote ---------- */
+  #mvp-{{ sid }} .mvp__offers { display: grid; gap: 16px; margin: 0 0 18px; padding: 0; border: 0; }
+  #mvp-{{ sid }} .mvp__offer {
+    position: relative;
+    border: 1px solid var(--mvp-border);
+    border-radius: 6px;
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  #mvp-{{ sid }} .mvp__offer.is-active { border: 2px solid var(--mvp-accent); box-shadow: 0 4px 16px rgba(13, 27, 79, 0.08); }
+  #mvp-{{ sid }} .mvp__badge {
+    position: absolute;
+    top: -11px;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 9px;
+    border-radius: 3px;
+    background: var(--mvp-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  #mvp-{{ sid }} .mvp__badge svg { width: 11px; height: 11px; color: #f5c518; }
+  #mvp-{{ sid }} .mvp__offer-head { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; align-items: center; padding: 16px 16px; cursor: pointer; }
+  #mvp-{{ sid }} .mvp__offer-head input { position: absolute; opacity: 0; pointer-events: none; }
+  #mvp-{{ sid }} .mvp__radio { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #9aa0ab; display: flex; align-items: center; justify-content: center; background: #fff; }
+  #mvp-{{ sid }} .mvp__offer.is-active .mvp__radio { border: 2px solid var(--mvp-accent); }
+  #mvp-{{ sid }} .mvp__offer.is-active .mvp__radio::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--mvp-accent); }
+  #mvp-{{ sid }} .mvp__offer-head input:focus-visible ~ .mvp__radio { outline: 2px solid var(--mvp-accent); outline-offset: 2px; }
+  #mvp-{{ sid }} .mvp__offer-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 0; font-size: 16px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.3; }
+  #mvp-{{ sid }} .mvp__save { display: inline-block; padding: 3px 7px; border-radius: 4px; background: var(--mvp-accent-soft); color: var(--mvp-accent); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  #mvp-{{ sid }} .mvp__offer-sub { margin: 3px 0 0; font-size: 12.5px; color: var(--mvp-muted); letter-spacing: 0.01em; line-height: 1.4; }
+  #mvp-{{ sid }} .mvp__offer-price { text-align: right; white-space: nowrap; }
+  #mvp-{{ sid }} .mvp__offer-price strong { display: block; font-size: 16px; font-weight: 700; }
+  #mvp-{{ sid }} .mvp__offer-price s { display: block; font-size: 12px; color: var(--mvp-muted); margin-top: 1px; }
+
+  #mvp-{{ sid }} .mvp__offer-body { padding: 0 16px 16px; }
+  #mvp-{{ sid }} .mvp__offer:not(.is-active) .mvp__units { display: none; }
+  #mvp-{{ sid }} .mvp__units-label { margin: 0 0 8px; font-size: 12px; color: var(--mvp-muted); }
+  #mvp-{{ sid }} .mvp__unit { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  #mvp-{{ sid }} .mvp__unit-num { width: 18px; font-size: 12px; color: var(--mvp-muted); text-align: right; }
+  #mvp-{{ sid }} .mvp__unit-img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; background: #f2f2f2; flex: 0 0 36px; }
+  #mvp-{{ sid }} .mvp__select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-width: 150px;
+    height: 36px;
+    padding: 0 30px 0 10px;
+    border: 1px solid var(--mvp-border);
+    border-radius: 5px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23222'/%3E%3C/svg%3E") no-repeat right 10px center / 8px 5px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--mvp-text);
+    cursor: pointer;
+  }
+  #mvp-{{ sid }} .mvp__perks { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+  #mvp-{{ sid }} .mvp__offer:not(.is-active) .mvp__perks { display: none; }
+  #mvp-{{ sid }} .mvp__perk { display: flex; align-items: center; gap: 8px; font-size: 12.5px; letter-spacing: 0.01em; }
+  #mvp-{{ sid }} .mvp__perk-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--mvp-perk); color: #fff; display: flex; align-items: center; justify-content: center; flex: 0 0 16px; }
+  #mvp-{{ sid }} .mvp__perk-icon svg { width: 9px; height: 9px; }
+  #mvp-{{ sid }} .mvp__offer:not(.is-active) .mvp__offer-body { display: none; }
+
+  /* ---------- Kaufen ---------- */
+  #mvp-{{ sid }} .mvp__atc {
+    width: 100%;
+    min-height: 56px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--mvp-accent);
+    color: #fff;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: filter 0.15s, transform 0.15s;
+  }
+  #mvp-{{ sid }} .mvp__atc:hover:not([disabled]) { filter: brightness(1.15); }
+  #mvp-{{ sid }} .mvp__atc[disabled] { opacity: 0.55; cursor: not-allowed; }
+  #mvp-{{ sid }} .mvp__atc[aria-busy='true'] { opacity: 0.75; cursor: progress; }
+  #mvp-{{ sid }} .mvp__error { margin: 10px 0 0; font-size: 13px; color: #c62828; }
+  #mvp-{{ sid }} .mvp__trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--mvp-muted); }
+  #mvp-{{ sid }} .mvp__trust li { display: flex; align-items: center; gap: 6px; }
+  #mvp-{{ sid }} .mvp__trust svg { width: 16px; height: 16px; color: var(--mvp-accent); }
+
+  #mvp-{{ sid }} .mvp__details { margin-top: 22px; border-top: 1px solid var(--mvp-border); border-bottom: 1px solid var(--mvp-border); }
+  #mvp-{{ sid }} .mvp__details summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 16px 2px; cursor: pointer; font-weight: 600; font-size: 15px; letter-spacing: 0.02em; }
+  #mvp-{{ sid }} .mvp__details summary::-webkit-details-marker { display: none; }
+  #mvp-{{ sid }} .mvp__details summary::after { content: '+'; font-size: 22px; font-weight: 400; line-height: 1; }
+  #mvp-{{ sid }} .mvp__details[open] summary::after { content: '–'; }
+  #mvp-{{ sid }} .mvp__desc { padding: 0 2px 18px; font-size: 14.5px; line-height: 1.65; color: #2f3440; }
+  #mvp-{{ sid }} .mvp__desc h1, #mvp-{{ sid }} .mvp__desc h2, #mvp-{{ sid }} .mvp__desc h3 { font-size: 16px; line-height: 1.5; font-weight: 600; margin: 0 0 12px; }
+  #mvp-{{ sid }} .mvp__desc img { max-width: 100%; height: auto; display: block; margin: 8px 0; border-radius: 8px; }
+
+  @media screen and (max-width: 749px) {
+    #mvp-{{ sid }} .mvp__offer-head { padding: 14px 12px; gap: 10px; }
+    #mvp-{{ sid }} .mvp__offer-body { padding: 0 12px 14px; }
+    #mvp-{{ sid }} .mvp__offer-title { font-size: 15px; }
+    #mvp-{{ sid }} .mvp__atc { font-size: 16px; }
+  }
+</style>
+
+<div id="mvp-{{ sid }}" class="mvp" data-section="{{ sid }}">
+  {%- if p == blank -%}
+    <div class="mvp__grid"><p>Bitte in den Section-Einstellungen ein Produkt auswählen.</p></div>
+  {%- else -%}
+    <div class="mvp__grid">
+      {%- comment -%} ---------- Galerie ---------- {%- endcomment -%}
+      <div class="mvp__gallery">
+        <div class="mvp__main" data-main aria-label="Produktbilder">
+          {%- for media in p.media -%}
+            <div class="mvp__slide" data-media-id="{{ media.id }}">
+              {%- liquid
+                if forloop.first
+                  assign img_loading = 'eager'
+                else
+                  assign img_loading = 'lazy'
+                endif
+              -%}
+              {{
+                media.preview_image
+                | image_url: width: 1400
+                | image_tag: loading: img_loading, sizes: '(min-width: 990px) 55vw, 100vw', widths: '500, 800, 1100, 1400', alt: media.alt | default: p.title
+              }}
+            </div>
+          {%- else -%}
+            <div class="mvp__slide">{{ 'product-1' | placeholder_svg_tag }}</div>
+          {%- endfor -%}
+        </div>
+        {%- if p.media.size > 1 -%}
+          <div class="mvp__thumbs-row">
+            <button type="button" class="mvp__nav" data-prev aria-label="Vorheriges Bild">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="mvp__thumbs" data-thumbs>
+              {%- for media in p.media -%}
+                <button type="button" class="mvp__thumb" data-index="{{ forloop.index0 }}" aria-label="Bild {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
+                  {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              {%- endfor -%}
+            </div>
+            <button type="button" class="mvp__nav" data-next aria-label="Nächstes Bild">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- Infos ---------- {%- endcomment -%}
+      <div class="mvp__info">
+        {%- if section.settings.rating_text != blank -%}
+          <p class="mvp__rating">
+            <span class="mvp__stars" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L10 14.9l-5.2 2.8 1-5.9L1.5 7.7l5.9-.8z"/></svg>
+              {%- endfor -%}
+            </span>
+            <span>{{ section.settings.rating_text | escape }}</span>
+          </p>
+        {%- endif -%}
+
+        <{{ title_tag }} class="mvp__title">{{ section.settings.title_override | default: p.title | escape }}</{{ title_tag }}>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="mvp__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+        <hr class="mvp__rule">
+
+        {%- if benefit_blocks.size > 0 -%}
+          <ul class="mvp__benefits">
+            {%- for block in benefit_blocks -%}
+              <li class="mvp__benefit" {{ block.shopify_attributes }}>
+                <span class="mvp__benefit-icon" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.3l2.4 2.4 5.2-5.4"/></svg>
+                </span>
+                <div>
+                  <p class="mvp__benefit-title">{{ block.settings.title | escape }}</p>
+                  {%- if block.settings.text != blank -%}
+                    <p class="mvp__benefit-text">{{ block.settings.text | escape }}</p>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.offers_label != blank and offer_blocks.size > 0 -%}
+          <p class="mvp__divider">{{ section.settings.offers_label | escape }}</p>
+        {%- endif -%}
+
+        <fieldset class="mvp__offers" data-offers>
+          <legend class="visually-hidden">Angebot wählen</legend>
+          {%- for block in offer_blocks -%}
+            {%- liquid
+              assign qty = block.settings.quantity
+              assign pct = block.settings.discount_percent
+              assign regular = base_price | times: qty
+              assign strike = base_compare | times: qty
+              assign disc = regular | times: pct | divided_by: 100.0 | round
+              assign final = regular | minus: disc
+              assign save_pct = 0
+              if strike > final
+                assign save_amount = strike | minus: final
+                assign save_pct = save_amount | times: 100.0 | divided_by: strike | round
+              endif
+              assign is_active = false
+              if forloop.index0 == selected_index
+                assign is_active = true
+              endif
+            -%}
+            <div class="mvp__offer{% if is_active %} is-active{% endif %}" data-offer data-qty="{{ qty }}" data-pct="{{ pct }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.badge != blank -%}
+                <span class="mvp__badge">
+                  {%- if block.settings.badge_star -%}
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L10 14.9l-5.2 2.8 1-5.9L1.5 7.7l5.9-.8z"/></svg>
+                  {%- endif -%}
+                  {{- block.settings.badge | escape -}}
+                </span>
+              {%- endif -%}
+              <label class="mvp__offer-head">
+                <input type="radio" name="mvp-offer-{{ sid }}" value="{{ forloop.index0 }}"{% if is_active %} checked{% endif %}>
+                <span class="mvp__radio" aria-hidden="true"></span>
+                <span>
+                  <span class="mvp__offer-title">
+                    {{- block.settings.title | escape -}}
+                    {%- if save_pct > 0 -%}
+                      <span class="mvp__save" data-save>Spare {{ save_pct }}&nbsp;%</span>
+                    {%- endif -%}
+                  </span>
+                  {%- if block.settings.subtitle != blank -%}
+                    <span class="mvp__offer-sub" style="display:block">{{ block.settings.subtitle | escape }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="mvp__offer-price">
+                  <strong data-final>{{ final | money }}</strong>
+                  {%- if strike > final -%}
+                    <s data-strike>{{ strike | money }}</s>
+                  {%- endif -%}
+                </span>
+              </label>
+
+              <div class="mvp__offer-body">
+                {%- if p.has_only_default_variant == false -%}
+                  <div class="mvp__units">
+                    <p class="mvp__units-label">{{ section.settings.variant_label | escape }}</p>
+                    {%- for i in (1..qty) -%}
+                      <div class="mvp__unit">
+                        {%- if qty > 1 -%}<span class="mvp__unit-num">{{ i }}.</span>{%- endif -%}
+                        {%- if default_variant.featured_image -%}
+                          <img class="mvp__unit-img" data-unit-img src="{{ default_variant.featured_image | image_url: width: 90 }}" alt="" width="36" height="36" loading="lazy">
+                        {%- endif -%}
+                        <select class="mvp__select" data-unit aria-label="{{ section.settings.variant_label | escape }} {{ i }}">
+                          {%- for variant in p.variants -%}
+                            {%- liquid
+                              assign label = ''
+                              for value in variant.options
+                                assign opt = p.options_with_values[forloop.index0]
+                                if opt.values.size > 1
+                                  assign shown = value
+                                  for line in name_lines
+                                    assign pair = line | split: '='
+                                    assign key = pair[0] | strip
+                                    if key == value and pair[1] != blank
+                                      assign shown = pair[1] | strip
+                                    endif
+                                  endfor
+                                  if label == ''
+                                    assign label = shown
+                                  else
+                                    assign label = label | append: ' / ' | append: shown
+                                  endif
+                                endif
+                              endfor
+                              if label == ''
+                                assign label = variant.title
+                              endif
+                            -%}
+                            <option value="{{ variant.id }}"{% if variant.id == default_variant.id %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
+                              {{- label | escape }}{% unless variant.available %} – ausverkauft{% endunless -%}
+                            </option>
+                          {%- endfor -%}
+                        </select>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  {%- for i in (1..qty) -%}
+                    <input type="hidden" data-unit value="{{ default_variant.id }}">
+                  {%- endfor -%}
+                {%- endif -%}
+
+                {%- assign perks = block.settings.perks | newline_to_br | split: '<br />' -%}
+                {%- if block.settings.perks != blank -%}
+                  <ul class="mvp__perks">
+                    {%- for perk in perks -%}
+                      {%- assign perk_text = perk | strip -%}
+                      {%- if perk_text != blank -%}
+                        <li class="mvp__perk">
+                          <span class="mvp__perk-icon" aria-hidden="true">
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 6.3l2.4 2.4 5.2-5.4"/></svg>
+                          </span>
+                          {{ perk_text | escape }}
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </fieldset>
+
+        <button type="button" class="mvp__atc" data-atc{% unless p.available %} disabled{% endunless %}>
+          {%- if p.available -%}
+            {{ section.settings.button_label | escape }}
+          {%- else -%}
+            Ausverkauft
+          {%- endif -%}
+        </button>
+        <p class="mvp__error" data-error role="alert" hidden></p>
+
+        {%- if section.settings.trust_1 != blank or section.settings.trust_2 != blank -%}
+          <ul class="mvp__trust">
+            {%- if section.settings.trust_1 != blank -%}
+              <li>
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h26v22H3zM29 19h9l7 8v7H29z"/><circle cx="12" cy="36" r="4"/><circle cx="36" cy="36" r="4"/></svg>
+                {{ section.settings.trust_1 | escape }}
+              </li>
+            {%- endif -%}
+            {%- if section.settings.trust_2 != blank -%}
+              <li>
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="21" width="32" height="22" rx="4"/><path d="M15 21v-6a9 9 0 0 1 18 0v6"/></svg>
+                {{ section.settings.trust_2 | escape }}
+              </li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.show_description and p.description != blank -%}
+          <details class="mvp__details">
+            <summary>{{ section.settings.description_label | escape }}</summary>
+            <div class="mvp__desc">{{ p.description }}</div>
+          </details>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <script type="application/json" data-variants>
+      {
+        "moneyFormat": {{ shop.money_format | json }},
+        "cartUrl": {{ routes.cart_url | json }},
+        "cartAddUrl": {{ routes.cart_add_url | append: '.js' | json }},
+        "variants": [
+          {%- for variant in p.variants -%}
+            {
+              "id": {{ variant.id }},
+              "price": {{ variant.price }},
+              "compare": {{ variant.compare_at_price | default: 0 }},
+              "available": {{ variant.available | json }},
+              "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 90 | json }}{% else %}null{% endif %},
+              "mediaId": {% if variant.featured_media %}{{ variant.featured_media.id }}{% else %}null{% endif %}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+
+    {%- if template.name == 'product' and p == product -%}
+      <script type="application/ld+json">
+        {{ p | structured_data }}
+      </script>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('mvp-{{ sid }}');
+    if (!root) return;
+    var dataEl = root.querySelector('[data-variants]');
+    if (!dataEl) return;
+    var data = JSON.parse(dataEl.textContent);
+    var byId = {};
+    data.variants.forEach(function (v) { byId[v.id] = v; });
+
+    /* ---------- Geldformat (Shopify money_format) ---------- */
+    function formatMoney(cents) {
+      var fmt = data.moneyFormat;
+      if (!fmt) return (cents / 100).toFixed(2).replace('.', ',') + ' €';
+      function fmtNum(n, dec, thou, decSep) {
+        var fixed = (n / 100).toFixed(dec);
+        var parts = fixed.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thou);
+        return parts.length > 1 ? parts[0] + decSep + parts[1] : parts[0];
+      }
+      var out = fmt.replace(/\{\{\s*(\w+)\s*\}\}/, function (_, key) {
+        switch (key) {
+          case 'amount': return fmtNum(cents, 2, ',', '.');
+          case 'amount_no_decimals': return fmtNum(cents, 0, ',', '.');
+          case 'amount_with_comma_separator': return fmtNum(cents, 2, '.', ',');
+          case 'amount_no_decimals_with_comma_separator': return fmtNum(cents, 0, '.', ',');
+          case 'amount_with_apostrophe_separator': return fmtNum(cents, 2, "'", '.');
+          case 'amount_with_space_separator': return fmtNum(cents, 2, ' ', ',');
+          default: return fmtNum(cents, 2, '.', ',');
+        }
+      });
+      var decoder = document.createElement('textarea');
+      decoder.innerHTML = out;
+      return decoder.value;
+    }
+
+    /* ---------- Galerie ---------- */
+    var main = root.querySelector('[data-main]');
+    var thumbsWrap = root.querySelector('[data-thumbs]');
+    var thumbs = thumbsWrap ? thumbsWrap.querySelectorAll('[data-index]') : [];
+    var slides = main.children;
+    var prevBtn = root.querySelector('[data-prev]');
+    var nextBtn = root.querySelector('[data-next]');
+    var current = 0;
+
+    function goToSlide(i) {
+      if (!slides[i]) return;
+      main.scrollTo({ left: slides[i].offsetLeft - main.offsetLeft, behavior: 'smooth' });
+    }
+    function markThumb(i) {
+      current = i;
+      Array.prototype.forEach.call(thumbs, function (t, idx) {
+        t.setAttribute('aria-current', idx === i ? 'true' : 'false');
+      });
+      var t = thumbs[i];
+      if (t && thumbsWrap) {
+        var left = t.offsetLeft - thumbsWrap.offsetLeft - thumbsWrap.clientWidth / 2 + t.clientWidth / 2;
+        thumbsWrap.scrollTo({ left: left, behavior: 'smooth' });
+      }
+      if (prevBtn) prevBtn.disabled = i === 0;
+      if (nextBtn) nextBtn.disabled = i === slides.length - 1;
+    }
+    Array.prototype.forEach.call(thumbs, function (t) {
+      t.addEventListener('click', function () { goToSlide(Number(t.dataset.index)); });
+    });
+    if (prevBtn) prevBtn.addEventListener('click', function () { goToSlide(Math.max(0, current - 1)); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goToSlide(Math.min(slides.length - 1, current + 1)); });
+    main.addEventListener('scroll', function () {
+      window.requestAnimationFrame(function () {
+        var i = Math.round(main.scrollLeft / Math.max(1, main.clientWidth));
+        if (i !== current) markThumb(i);
+      });
+    }, { passive: true });
+    markThumb(0);
+
+    function showVariantMedia(variant) {
+      if (!variant || !variant.mediaId) return;
+      for (var i = 0; i < slides.length; i++) {
+        if (String(slides[i].dataset.mediaId) === String(variant.mediaId)) { goToSlide(i); return; }
+      }
+    }
+
+    /* ---------- Angebote ---------- */
+    var offers = root.querySelectorAll('[data-offer]');
+    var atc = root.querySelector('[data-atc]');
+    var errorEl = root.querySelector('[data-error]');
+    var atcLabel = atc ? atc.textContent.trim() : '';
+
+    function activeOffer() { return root.querySelector('[data-offer].is-active') || offers[0]; }
+
+    function priceOffer(offer) {
+      var pct = Number(offer.dataset.pct) || 0;
+      var regular = 0;
+      var strike = 0;
+      offer.querySelectorAll('[data-unit]').forEach(function (el) {
+        var v = byId[el.value];
+        if (!v) return;
+        regular += v.price;
+        strike += Math.max(v.compare, v.price);
+      });
+      var final = regular - Math.round((regular * pct) / 100);
+      return { final: final, strike: strike };
+    }
+
+    function refresh() {
+      var offer = activeOffer();
+      if (!offer || !atc) return;
+      var prices = priceOffer(offer);
+      var finalEl = offer.querySelector('[data-final]');
+      var strikeEl = offer.querySelector('[data-strike]');
+      if (finalEl) finalEl.textContent = formatMoney(prices.final);
+      if (strikeEl) strikeEl.textContent = formatMoney(prices.strike);
+      var soldOut = false;
+      offer.querySelectorAll('[data-unit]').forEach(function (el) {
+        var v = byId[el.value];
+        if (!v || !v.available) soldOut = true;
+      });
+      atc.disabled = soldOut;
+      atc.textContent = soldOut ? 'Ausverkauft' : atcLabel + ' – ' + formatMoney(prices.final);
+    }
+
+    offers.forEach(function (offer) {
+      var radio = offer.querySelector('input[type="radio"]');
+      radio.addEventListener('change', function () {
+        offers.forEach(function (o) { o.classList.toggle('is-active', o === offer); });
+        if (errorEl) errorEl.hidden = true;
+        refresh();
+      });
+      offer.querySelectorAll('select[data-unit]').forEach(function (sel) {
+        sel.addEventListener('change', function () {
+          var v = byId[sel.value];
+          var img = sel.parentNode.querySelector('[data-unit-img]');
+          if (img && v && v.image) img.src = v.image;
+          showVariantMedia(v);
+          refresh();
+        });
+      });
+    });
+
+    if (atc) {
+      atc.addEventListener('click', function () {
+        var offer = activeOffer();
+        if (!offer) return;
+        var counts = {};
+        var order = [];
+        offer.querySelectorAll('[data-unit]').forEach(function (el) {
+          if (!counts[el.value]) { counts[el.value] = 0; order.push(el.value); }
+          counts[el.value] += 1;
+        });
+        var items = order.map(function (id) { return { id: Number(id), quantity: counts[id] }; });
+        atc.setAttribute('aria-busy', 'true');
+        atc.disabled = true;
+        if (errorEl) errorEl.hidden = true;
+        fetch(data.cartAddUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: items })
+        })
+          .then(function (res) { return res.json().then(function (body) { return { ok: res.ok, body: body }; }); })
+          .then(function (r) {
+            if (!r.ok) throw new Error((r.body && (r.body.description || r.body.message)) || 'Fehler');
+            window.location.href = data.cartUrl;
+          })
+          .catch(function (err) {
+            atc.removeAttribute('aria-busy');
+            refresh();
+            if (errorEl) {
+              errorEl.textContent = 'Das hat leider nicht geklappt: ' + err.message;
+              errorEl.hidden = false;
+            }
+          });
+      });
+    }
+
+    refresh();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Produkt mit Angeboten",
+  "tag": "section",
+  "class": "section section-mv-product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Produkt", "info": "Auf der Produktseite leer lassen – dann wird automatisch das aktuelle Produkt genutzt." },
+    { "type": "header", "content": "Kopfbereich" },
+    { "type": "text", "id": "rating_text", "label": "Bewertungszeile", "info": "Nur mit echten Zahlen füllen (z. B. aus deiner Bewertungs-App). Leer = ausgeblendet." },
+    { "type": "text", "id": "title_override", "label": "Titel (optional)", "info": "Leer = Produkttitel" },
+    { "type": "text", "id": "subtitle", "label": "Unterzeile", "default": "Endlich entspannt auf der Seite schlafen – ab der ersten Nacht" },
+    { "type": "header", "content": "Angebote" },
+    { "type": "text", "id": "offers_label", "label": "Trenner über den Angeboten", "default": "Wähle dein Set" },
+    { "type": "text", "id": "variant_label", "label": "Bezeichnung der Auswahl", "default": "Farbe" },
+    { "type": "textarea", "id": "value_names", "label": "Varianten-Namen übersetzen", "info": "Eine Zeile pro Wert: Original=Anzeige", "default": "Dark gray=Dunkelgrau\nLight gray=Hellgrau\nGreen=Grün\nNavy blue=Marineblau" },
+    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "In den Warenkorb" },
+    { "type": "text", "id": "trust_1", "label": "Vertrauenszeile 1", "default": "Kostenloser Versand" },
+    { "type": "text", "id": "trust_2", "label": "Vertrauenszeile 2", "default": "Sichere Bezahlung" },
+    { "type": "checkbox", "id": "show_description", "label": "Produktbeschreibung als Aufklapper zeigen", "default": true },
+    { "type": "text", "id": "description_label", "label": "Titel des Aufklappers", "default": "Produktdetails" },
+    { "type": "header", "content": "Farben" },
+    { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#14171f" },
+    { "type": "color", "id": "accent", "label": "Akzent (Button, Rahmen)", "default": "#0d1b4f" },
+    { "type": "color", "id": "accent_soft", "label": "Akzent hell (Spar-Etikett)", "default": "#e7ecf8" },
+    { "type": "color", "id": "star_color", "label": "Sterne", "default": "#f5b400" },
+    { "type": "color", "id": "perk_color", "label": "Häkchen bei Extras", "default": "#1fbf6b" },
+    { "type": "header", "content": "Abstände" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Abstand oben", "default": 32 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Abstand unten", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Vorteil",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Vorteil" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "offer",
+      "name": "Angebot",
+      "settings": [
+        { "type": "range", "id": "quantity", "min": 1, "max": 5, "step": 1, "label": "Stückzahl", "default": 1 },
+        { "type": "text", "id": "title", "label": "Titel", "default": "1 Stück" },
+        { "type": "text", "id": "subtitle", "label": "Unterzeile" },
+        { "type": "range", "id": "discount_percent", "min": 0, "max": 60, "step": 1, "unit": "%", "label": "Mengenrabatt", "default": 0, "info": "Muss mit dem automatischen Rabatt in Shopify übereinstimmen, sonst stimmt der Preis an der Kasse nicht." },
+        { "type": "text", "id": "badge", "label": "Etikett oben rechts" },
+        { "type": "checkbox", "id": "badge_star", "label": "Stern im Etikett", "default": true },
+        { "type": "textarea", "id": "perks", "label": "Extras (eine Zeile pro Extra)" },
+        { "type": "checkbox", "id": "selected", "label": "Vorausgewählt", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produkt mit Angeboten",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "offer", "settings": { "quantity": 1, "title": "1 Stück" } },
+        { "type": "offer", "settings": { "quantity": 2, "title": "2 Stück", "discount_percent": 20, "selected": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

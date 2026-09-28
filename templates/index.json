@@ -1,6 +1,108 @@
 {
   "sections": {
-    "main": {
+    "hero": {
+      "type": "mv-image-banner",
+      "settings": {
+        "image": "shopify://shop_images/S791e11c9bf19452281f98cc498050edc3.webp",
+        "image_position": "center center",
+        "overlay": 40,
+        "height_desktop": 700,
+        "height_mobile": 560,
+        "alignment": "left",
+        "heading": "Entlastung, die du spürst",
+        "heading_size": 46,
+        "text": "<p>Das ergonomische Kniekissen aus Memory-Schaum hält Hüfte, Becken und Wirbelsäule in einer Linie – damit du als Seitenschläfer morgens entspannt statt verspannt aufwachst.</p>",
+        "button_label": "Jetzt entdecken",
+        "button_link": "shopify://products/ergonomisches-kniekissen-aus-memory-schaum-fur-seitenschlafer",
+        "text_color": "#ffffff",
+        "button_bg": "#ffffff",
+        "button_text": "#0d1b4f",
+        "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)"
+      }
+    },
+    "mission": {
+      "type": "mv-image-banner",
+      "settings": {
+        "image_position": "center center",
+        "overlay": 45,
+        "height_desktop": 560,
+        "height_mobile": 520,
+        "alignment": "center",
+        "heading": "Unsere Mission",
+        "heading_size": 42,
+        "text": "<p>Wir haben Modava aus einem einfachen Grund gestartet: Guter Schlaf sollte nicht an einem verspannten Rücken oder schmerzenden Knien scheitern.</p><p>Wer auf der Seite schläft, liegt oft schief: Das obere Bein rutscht nach vorn, die Hüfte kippt und der untere Rücken arbeitet die ganze Nacht mit. Unser Kniekissen gleicht genau das aus – einfach zwischen die Knie legen und entspannen.</p><p>Unser Ziel: ein einfaches Hilfsmittel, das deine Nächte ruhiger und deine Morgen leichter macht.</p>",
+        "button_label": "Jetzt entdecken",
+        "button_link": "shopify://products/ergonomisches-kniekissen-aus-memory-schaum-fur-seitenschlafer",
+        "text_color": "#ffffff",
+        "button_bg": "#ffffff",
+        "button_text": "#0d1b4f",
+        "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)"
+      }
+    },
+    "features": {
+      "type": "mv-features",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "spine",
+            "title": "Ergonomische Form",
+            "text": "Die Konturform passt genau zwischen die Knie und hält Hüfte, Becken und Wirbelsäule in einer natürlichen Linie."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "moon",
+            "title": "Erholsamer schlafen",
+            "text": "Weniger Druck auf Knie und Hüfte heißt weniger Umherwälzen in der Nacht – und entspannteres Aufwachen am Morgen."
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "foam",
+            "title": "Formstabiler Memory-Schaum",
+            "text": "Der Schaum passt sich deinem Körper an und nimmt danach wieder seine ursprüngliche Form an – Nacht für Nacht."
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "icon": "wash",
+            "title": "Waschbarer Bezug",
+            "text": "Der atmungsaktive Bezug lässt sich einfach abnehmen und waschen – für ein frisches, hygienisches Schlafgefühl."
+          }
+        },
+        "card_5": {
+          "type": "card",
+          "settings": {
+            "icon": "heart",
+            "title": "Vielseitig einsetzbar",
+            "text": "Ideal in der Schwangerschaft, nach langem Sitzen oder Stehen – oder in Rückenlage als Stütze unter den Knien."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5"
+      ],
+      "settings": {
+        "heading": "Was uns anders macht",
+        "bg": "#ffffff",
+        "heading_color": "#0d1b4f",
+        "card_bg": "#f3f3f3",
+        "icon_color": "#111111",
+        "title_color": "#1a1a1a",
+        "text_color": "#3d3d3d",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "product": {
       "type": "mv-product",
       "blocks": {
         "benefit_1": {
@@ -89,6 +191,7 @@
         "offer_3"
       ],
       "settings": {
+        "product": "ergonomisches-kniekissen-aus-memory-schaum-fur-seitenschlafer",
         "rating_text": "",
         "title_override": "Modava Kniekissen – ergonomisch für Seitenschläfer",
         "subtitle": "Endlich entspannt auf der Seite schlafen – ab der ersten Nacht",
@@ -98,7 +201,7 @@
         "button_label": "In den Warenkorb",
         "trust_1": "Kostenloser Versand",
         "trust_2": "Sichere Bezahlung",
-        "show_description": true,
+        "show_description": false,
         "description_label": "Produktdetails",
         "bg": "#ffffff",
         "text_color": "#14171f",
@@ -106,74 +209,11 @@
         "accent_soft": "#e7ecf8",
         "star_color": "#f5b400",
         "perk_color": "#1fbf6b",
-        "padding_top": 32,
+        "padding_top": 48,
         "padding_bottom": 48
       }
     },
-    "features": {
-      "type": "mv-features",
-      "blocks": {
-        "card_1": {
-          "type": "card",
-          "settings": {
-            "icon": "spine",
-            "title": "Ergonomische Form",
-            "text": "Die Konturform passt genau zwischen die Knie und hält Hüfte, Becken und Wirbelsäule in einer natürlichen Linie."
-          }
-        },
-        "card_2": {
-          "type": "card",
-          "settings": {
-            "icon": "moon",
-            "title": "Erholsamer schlafen",
-            "text": "Weniger Druck auf Knie und Hüfte heißt weniger Umherwälzen in der Nacht – und entspannteres Aufwachen am Morgen."
-          }
-        },
-        "card_3": {
-          "type": "card",
-          "settings": {
-            "icon": "foam",
-            "title": "Formstabiler Memory-Schaum",
-            "text": "Der Schaum passt sich deinem Körper an und nimmt danach wieder seine ursprüngliche Form an – Nacht für Nacht."
-          }
-        },
-        "card_4": {
-          "type": "card",
-          "settings": {
-            "icon": "wash",
-            "title": "Waschbarer Bezug",
-            "text": "Der atmungsaktive Bezug lässt sich einfach abnehmen und waschen – für ein frisches, hygienisches Schlafgefühl."
-          }
-        },
-        "card_5": {
-          "type": "card",
-          "settings": {
-            "icon": "heart",
-            "title": "Vielseitig einsetzbar",
-            "text": "Ideal in der Schwangerschaft, nach langem Sitzen oder Stehen – oder in Rückenlage als Stütze unter den Knien."
-          }
-        }
-      },
-      "block_order": [
-        "card_1",
-        "card_2",
-        "card_3",
-        "card_4",
-        "card_5"
-      ],
-      "settings": {
-        "heading": "Was uns anders macht",
-        "bg": "#ffffff",
-        "heading_color": "#0d1b4f",
-        "card_bg": "#f3f3f3",
-        "icon_color": "#111111",
-        "title_color": "#1a1a1a",
-        "text_color": "#3d3d3d",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
-    "comparison-table": {
+    "comparison": {
       "type": "comparison-table",
       "blocks": {
         "row_1": {
@@ -242,7 +282,8 @@
         "x_color": "#e5484d",
         "annotation_color": "#0d1b4f",
         "padding_top": 48,
-        "padding_bottom": 48
+        "padding_bottom": 48,
+        "left_image": "shopify://shop_images/S791e11c9bf19452281f98cc498050edc3.webp"
       }
     },
     "reviews": {
@@ -365,21 +406,15 @@
         "padding_top": 56,
         "padding_bottom": 64
       }
-    },
-    "disclosures": {
-      "type": "disclosures",
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
-      }
     }
   },
   "order": [
-    "main",
+    "hero",
+    "mission",
     "features",
-    "comparison-table",
+    "product",
+    "comparison",
     "reviews",
-    "faq",
-    "disclosures"
+    "faq"
   ]
 }

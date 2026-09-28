@@ -1,0 +1,188 @@
+{%- comment -%}
+  Vollbild-Banner mit Bild, Abdunklung, Überschrift, Text und Button.
+  Wird für den Hero ("Entlastung, die du spürst") und "Unsere Mission" genutzt.
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+{%- assign heading_font_bold = settings.type_header_font | font_modify: 'weight', 'bold' -%}
+
+<style>
+  {{ heading_font_bold | font_face: font_display: 'swap' }}
+
+  #mvb-{{ sid }} {
+    --mvb-text: {{ section.settings.text_color }};
+    --mvb-btn-bg: {{ section.settings.button_bg }};
+    --mvb-btn-text: {{ section.settings.button_text }};
+    --mvb-fallback: {{ section.settings.fallback_bg }};
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    min-height: {{ section.settings.height_mobile }}px;
+    background: var(--mvb-fallback);
+    color: var(--mvb-text);
+  }
+  @media screen and (min-width: 750px) {
+    #mvb-{{ sid }} { min-height: {{ section.settings.height_desktop }}px; }
+  }
+  #mvb-{{ sid }} .mvb__media { position: absolute; inset: 0; }
+  #mvb-{{ sid }} .mvb__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+    display: block;
+  }
+  #mvb-{{ sid }} .mvb__overlay {
+    position: absolute;
+    inset: 0;
+    {%- if section.settings.alignment == 'left' -%}
+      background: linear-gradient(90deg, rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 100.0 | plus: 0.15 }}) 0%, rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 100.0 }}) 55%, rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 200.0 }}) 100%);
+    {%- else -%}
+      background: rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 100.0 }});
+    {%- endif -%}
+  }
+  #mvb-{{ sid }} .mvb__inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 64px 20px;
+    {%- if section.settings.alignment == 'center' -%}
+      text-align: center;
+    {%- endif -%}
+  }
+  @media screen and (min-width: 750px) {
+    #mvb-{{ sid }} .mvb__inner { padding: 88px 5rem; }
+  }
+  #mvb-{{ sid }} .mvb__content {
+    {%- if section.settings.alignment == 'center' -%}
+      max-width: 1000px;
+      margin: 0 auto;
+    {%- else -%}
+      max-width: 760px;
+    {%- endif -%}
+  }
+  #mvb-{{ sid }} .mvb__heading {
+    margin: 0 0 22px;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: clamp(30px, 4.2vw, {{ section.settings.heading_size }}px);
+    line-height: 1.12;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    color: var(--mvb-text);
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);
+  }
+  #mvb-{{ sid }} .mvb__text {
+    font-size: 16px;
+    line-height: 1.75;
+    letter-spacing: 0.03em;
+    color: var(--mvb-text);
+  }
+  #mvb-{{ sid }} .mvb__text p { margin: 0 0 14px; }
+  #mvb-{{ sid }} .mvb__text p:last-child { margin-bottom: 0; }
+  @media screen and (min-width: 750px) {
+    #mvb-{{ sid }} .mvb__text { font-size: 17px; }
+  }
+  #mvb-{{ sid }} .mvb__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    min-height: 52px;
+    padding: 0 32px;
+    border-radius: 6px;
+    background: var(--mvb-btn-bg);
+    color: var(--mvb-btn-text);
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  #mvb-{{ sid }} .mvb__btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+</style>
+
+<div id="mvb-{{ sid }}" class="mvb">
+  {%- if section.settings.image != blank -%}
+    <div class="mvb__media">
+      {%- liquid
+        if section.index == 1
+          assign img_loading = 'eager'
+        else
+          assign img_loading = 'lazy'
+        endif
+      -%}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag: loading: img_loading, sizes: '100vw', widths: '750, 1100, 1500, 1920, 2400', alt: section.settings.image.alt
+      }}
+    </div>
+    <div class="mvb__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="mvb__inner">
+    <div class="mvb__content">
+      {%- if section.settings.heading != blank -%}
+        {%- if section.index == 1 -%}
+          <h1 class="mvb__heading">{{ section.settings.heading | escape }}</h1>
+        {%- else -%}
+          <h2 class="mvb__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="mvb__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="mvb__btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bild-Banner (Modava)",
+  "tag": "section",
+  "class": "section section-mv-image-banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Hintergrundbild", "info": "Am besten ein großes Querformat-Foto (mind. 1920 px breit). Ohne Bild wird die Hintergrundfarbe genutzt." },
+    { "type": "select", "id": "image_position", "label": "Bildausschnitt", "default": "center center", "options": [
+      { "value": "left center", "label": "Links" },
+      { "value": "center center", "label": "Mitte" },
+      { "value": "right center", "label": "Rechts" },
+      { "value": "center top", "label": "Oben" },
+      { "value": "center bottom", "label": "Unten" }
+    ] },
+    { "type": "range", "id": "overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Abdunklung", "default": 35 },
+    { "type": "range", "id": "height_desktop", "min": 300, "max": 900, "step": 20, "unit": "px", "label": "Mindesthöhe Desktop", "default": 640 },
+    { "type": "range", "id": "height_mobile", "min": 300, "max": 800, "step": 20, "unit": "px", "label": "Mindesthöhe Handy", "default": 520 },
+    { "type": "select", "id": "alignment", "label": "Textausrichtung", "default": "left", "options": [
+      { "value": "left", "label": "Links" },
+      { "value": "center", "label": "Mittig" }
+    ] },
+    { "type": "header", "content": "Inhalt" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Entlastung, die du spürst" },
+    { "type": "range", "id": "heading_size", "min": 28, "max": 64, "step": 2, "unit": "px", "label": "Schriftgröße Überschrift (Desktop)", "default": 46 },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Jetzt entdecken" },
+    { "type": "url", "id": "button_link", "label": "Button-Link" },
+    { "type": "header", "content": "Farben" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "color", "id": "button_bg", "label": "Button-Hintergrund", "default": "#ffffff" },
+    { "type": "color", "id": "button_text", "label": "Button-Text", "default": "#0d1b4f" },
+    { "type": "color_background", "id": "fallback_bg", "label": "Hintergrund ohne Bild", "default": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)" }
+  ],
+  "presets": [
+    { "name": "Bild-Banner (Modava)" }
+  ]
+}
+{% endschema %}

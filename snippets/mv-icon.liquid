@@ -1,0 +1,24 @@
+{%- comment -%}
+  Linien-Icons für die Modava-Sections.
+  Aufruf: render 'mv-icon', icon: 'spine'
+{%- endcomment -%}
+{%- case icon -%}
+  {%- when 'spine' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="12" height="7" rx="3"/><rect x="17" y="13" width="14" height="7" rx="3"/><rect x="16" y="23" width="16" height="7" rx="3"/><rect x="17" y="33" width="14" height="7" rx="3"/><path d="M24 40v5M10 16c-3 5-3 11 0 16M38 16c3 5 3 11 0 16"/></svg>
+  {%- when 'moon' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M31 6a17 17 0 1 0 11 27A14 14 0 0 1 31 6z"/><path d="M36 10h6l-6 7h6M29 20h4l-4 5h4"/></svg>
+  {%- when 'foam' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6L4 16l20 10 20-10L24 6z"/><path d="M4 24l20 10 20-10"/><path d="M4 32l20 10 20-10"/></svg>
+  {%- when 'wash' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h38l-4 28a3 3 0 0 1-3 2.6H12A3 3 0 0 1 9 40L5 12z"/><path d="M7 22c3 0 3 2 6 2s3-2 6-2 3 2 6 2 3-2 6-2 3 2 6 2 3-2 5-2"/><path d="M5 12c2-3 4-5 7-5M43 12c-2-3-4-5-7-5"/></svg>
+  {%- when 'heart' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 41S5 30 5 17a10 10 0 0 1 19-4 10 10 0 0 1 19 4c0 13-19 24-19 24z"/><path d="M15 21h5l3-5 4 10 3-5h4"/></svg>
+  {%- when 'leaf' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="20"/><path d="M15 33c0-12 7-19 19-19 0 12-7 19-19 19z"/><path d="M15 33l10-10"/></svg>
+  {%- when 'shield' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10l16-6z"/><path d="M17 24l5 5 9-10"/></svg>
+  {%- when 'truck' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h26v22H3zM29 19h9l7 8v7H29z"/><circle cx="12" cy="36" r="4"/><circle cx="36" cy="36" r="4"/></svg>
+  {%- else -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="20"/><path d="M15 24l6 6 12-13"/></svg>
+{%- endcase -%}
