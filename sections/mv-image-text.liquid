@@ -65,6 +65,10 @@
   #mvit-{{ sid }} .mvit__text p:last-child { margin-bottom: 0; }
   #mvit-{{ sid }} .mvit__text strong { font-weight: 700; color: var(--mvit-heading); }
   @media screen and (max-width: 749px) {
+    #mvit-{{ sid }} .mvit__rows { gap: 36px; }
+    #mvit-{{ sid }} .mvit__row { gap: 16px; }
+    #mvit-{{ sid }} .mvit__media { aspect-ratio: {{ section.settings.mobile_ratio }}; border-radius: 10px; }
+    #mvit-{{ sid }} .mvit__title { font-size: 21px; margin-bottom: 10px; }
     #mvit-{{ sid }} .mvit__body { padding: 0 4px; }
     #mvit-{{ sid }} .mvit__text { font-size: 15px; line-height: 1.7; }
   }
@@ -127,6 +131,11 @@
     { "type": "text", "id": "heading", "label": "Überschrift (optional)" },
     { "type": "product", "id": "product", "label": "Produkt für Ersatzbilder", "info": "Auf der Produktseite leer lassen." },
     { "type": "checkbox", "id": "first_image_right", "label": "Erste Zeile: Bild rechts", "default": true },
+    { "type": "select", "id": "mobile_ratio", "label": "Handy: Bildformat", "default": "4 / 3", "options": [
+      { "value": "1 / 1", "label": "Quadratisch (groß)" },
+      { "value": "4 / 3", "label": "Querformat" },
+      { "value": "16 / 9", "label": "Breit (klein)" }
+    ] },
     { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#ffffff" },
     { "type": "color", "id": "heading_color", "label": "Überschriften", "default": "#0d1b4f" },
     { "type": "color", "id": "text_color", "label": "Text", "default": "#14171f" },

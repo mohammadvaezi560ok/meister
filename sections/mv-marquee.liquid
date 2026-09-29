@@ -55,6 +55,10 @@
   @media screen and (max-width: 749px) { #mvm-{{ sid }} .mvm__item { font-size: 15px; } }
   #mvm-{{ sid }} .mvm__icon { width: 28px; height: 28px; flex: 0 0 28px; color: {{ section.settings.icon_color }}; }
   #mvm-{{ sid }} .mvm__icon svg { width: 100%; height: 100%; display: block; }
+  #mvm-{{ sid }} .mvm__stars { display: inline-flex; gap: 1px; color: {{ section.settings.star_color }}; }
+  #mvm-{{ sid }} .mvm__stars svg { width: 16px; height: 16px; display: block; }
+  #mvm-{{ sid }} .mvm__item--review { font-weight: 600; }
+  #mvm-{{ sid }} .mvm__author { font-weight: 400; font-style: italic; opacity: 0.75; }
   #mvm-{{ sid }} .mvm__logo { height: {{ section.settings.logo_height }}px; width: auto; display: block; }
   #mvm-{{ sid }}:hover .mvm__track { animation-play-state: paused; }
   @keyframes mvm-scroll-{{ sid }} {
@@ -72,6 +76,14 @@
     {%- if block.type == 'logo' and block.settings.logo != blank -%}
       <span class="mvm__item">
         {{ block.settings.logo | image_url: height: 120 | image_tag: class: 'mvm__logo', loading: 'lazy', alt: block.settings.alt }}
+      </span>
+    {%- elsif block.type == 'review' and block.settings.quote != blank -%}
+      <span class="mvm__item mvm__item--review">
+        <span class="mvm__stars" aria-label="{{ block.settings.stars }} von 5 Sternen">
+          {%- for i in (1..block.settings.stars) -%}<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L10 14.9l-5.2 2.8 1-5.9L1.5 7.7l5.9-.8z"/></svg>{%- endfor -%}
+        </span>
+        „{{ block.settings.quote | escape }}“
+        {%- if block.settings.author != blank -%}<span class="mvm__author">– {{ block.settings.author | escape }}</span>{%- endif -%}
       </span>
     {%- elsif block.type == 'text' -%}
       <span class="mvm__item">
@@ -110,6 +122,7 @@
     { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#ffffff" },
     { "type": "color", "id": "text_color", "label": "Text", "default": "#111111" },
     { "type": "color", "id": "icon_color", "label": "Icons", "default": "#0d1b4f" },
+    { "type": "color", "id": "star_color", "label": "Sterne", "default": "#f5b400" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Abstand oben", "default": 28 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Abstand unten", "default": 28 }
   ],
@@ -131,6 +144,16 @@
           { "value": "leaf", "label": "Blatt" }
         ] },
         { "type": "text", "id": "text", "label": "Text", "default": "Vorteil" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Kundenstimme",
+      "settings": [
+        { "type": "paragraph", "content": "Nur echte Zitate von Käufern verwenden – erfundene Kundenstimmen sind verboten (UWG)." },
+        { "type": "range", "id": "stars", "min": 1, "max": 5, "step": 1, "label": "Sterne", "default": 5 },
+        { "type": "text", "id": "quote", "label": "Kurzes Zitat" },
+        { "type": "text", "id": "author", "label": "Name (z. B. Anna M.)" }
       ]
     },
     {

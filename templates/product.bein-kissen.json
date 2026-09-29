@@ -98,7 +98,7 @@
         "button_label": "In den Warenkorb",
         "trust_1": "Kostenloser Versand",
         "trust_2": "Sichere Bezahlung",
-        "show_description": true,
+        "show_description": false,
         "description_label": "Produktdetails",
         "bg": "#ffffff",
         "text_color": "#14171f",
@@ -110,7 +110,9 @@
         "padding_bottom": 48,
         "show_sticky": true,
         "sticky_title": "Modava Kniekissen",
-        "sticky_button": "In den Warenkorb"
+        "sticky_button": "In den Warenkorb",
+        "mobile_image_ratio": "5 / 4",
+        "reviews_heading": "Das sagen unsere Kunden"
       }
     },
     "image-text": {
@@ -153,7 +155,8 @@
         "heading_color": "#0d1b4f",
         "text_color": "#14171f",
         "padding_top": 48,
-        "padding_bottom": 56
+        "padding_bottom": 56,
+        "mobile_ratio": "4 / 3"
       }
     },
     "relief-cards": {

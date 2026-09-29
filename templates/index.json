@@ -7,7 +7,7 @@
         "image_position": "center center",
         "overlay": 40,
         "height_desktop": 700,
-        "height_mobile": 560,
+        "height_mobile": 460,
         "alignment": "left",
         "heading": "Entlastung, die du spürst",
         "heading_size": 46,
@@ -27,7 +27,7 @@
         "image_position": "center center",
         "overlay": 45,
         "height_desktop": 560,
-        "height_mobile": 520,
+        "height_mobile": 460,
         "alignment": "center",
         "heading": "Unsere Mission",
         "heading_size": 42,
@@ -215,7 +215,9 @@
         "padding_bottom": 48,
         "show_sticky": true,
         "sticky_title": "Modava Kniekissen",
-        "sticky_button": "In den Warenkorb"
+        "sticky_button": "In den Warenkorb",
+        "mobile_image_ratio": "5 / 4",
+        "reviews_heading": "Das sagen unsere Kunden"
       }
     },
     "comparison": {
@@ -482,7 +484,8 @@
         "text_color": "#111111",
         "icon_color": "#0d1b4f",
         "padding_top": 24,
-        "padding_bottom": 24
+        "padding_bottom": 24,
+        "star_color": "#f5b400"
       }
     }
   },

@@ -49,6 +49,14 @@
   #mvrc-{{ sid }} .mvrc__card { scroll-snap-align: start; display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #fff; }
   #mvrc-{{ sid }} .mvrc__img { aspect-ratio: 1 / 1; background: #fff; border: 1px solid #eceef3; border-bottom: 0; border-radius: 14px 14px 0 0; overflow: hidden; }
   #mvrc-{{ sid }} .mvrc__img svg, #mvrc-{{ sid }} .mvrc__img img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  @media screen and (max-width: 749px) {
+    #mvrc-{{ sid }} .mvrc__track { grid-auto-columns: 80%; gap: 12px; }
+    #mvrc-{{ sid }} .mvrc__img { aspect-ratio: 4 / 3; }
+    #mvrc-{{ sid }} .mvrc__img svg { padding: 6px 0; }
+    #mvrc-{{ sid }} .mvrc__box { padding: 16px 16px 18px; }
+    #mvrc-{{ sid }} .mvrc__title { font-size: 17px; }
+    #mvrc-{{ sid }} .mvrc__list li { font-size: 13.5px; }
+  }
   #mvrc-{{ sid }} .mvrc__box {
     flex: 1;
     background: linear-gradient(160deg, var(--mvrc-accent) 0%, {{ section.settings.accent_2 }} 100%);
