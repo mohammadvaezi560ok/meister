@@ -15,8 +15,8 @@
         "button_label": "Jetzt entdecken",
         "button_link": "shopify://products/ergonomisches-kniekissen-aus-memory-schaum-fur-seitenschlafer",
         "text_color": "#ffffff",
-        "button_bg": "#ffffff",
-        "button_text": "#0d1b4f",
+        "button_bg": "#0d1b4f",
+        "button_text": "#ffffff",
         "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)",
         "mobile_bottom": true
       }
