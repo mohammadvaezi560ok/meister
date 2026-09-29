@@ -3,11 +3,11 @@
     "hero": {
       "type": "mv-image-banner",
       "settings": {
-        "image": "shopify://shop_images/S791e11c9bf19452281f98cc498050edc3.webp",
+        "image": "shopify://shop_images/S43b455b115bd4f2bb07118927994a02cY.webp",
         "image_position": "center center",
-        "overlay": 40,
+        "overlay": 45,
         "height_desktop": 700,
-        "height_mobile": 460,
+        "height_mobile": 400,
         "alignment": "left",
         "heading": "Entlastung, die du spürst",
         "heading_size": 46,
@@ -27,7 +27,7 @@
         "image_position": "center center",
         "overlay": 45,
         "height_desktop": 560,
-        "height_mobile": 460,
+        "height_mobile": 400,
         "alignment": "center",
         "heading": "Unsere Mission",
         "heading_size": 42,

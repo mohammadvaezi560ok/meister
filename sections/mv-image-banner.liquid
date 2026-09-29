@@ -108,10 +108,11 @@
   #mvb-{{ sid }} .mvb__btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
 
   @media screen and (max-width: 749px) {
-    #mvb-{{ sid }} .mvb__inner { padding: 44px 20px 40px; }
-    #mvb-{{ sid }} .mvb__heading { margin-bottom: 14px; font-size: clamp(26px, 7.4vw, 34px); }
-    #mvb-{{ sid }} .mvb__text { font-size: 15px; line-height: 1.65; letter-spacing: 0.02em; }
-    #mvb-{{ sid }} .mvb__btn { display: flex; width: 100%; max-width: 360px; margin-top: 22px; font-size: 16px; }
+    #mvb-{{ sid }} .mvb__inner { padding: 32px 18px 30px; }
+    #mvb-{{ sid }} .mvb__heading { margin-bottom: 10px; font-size: clamp(22px, 6.2vw, 26px); line-height: 1.18; }
+    #mvb-{{ sid }} .mvb__text { font-size: 14.5px; line-height: 1.55; letter-spacing: 0.01em; }
+    #mvb-{{ sid }} .mvb__text p { margin-bottom: 10px; }
+    #mvb-{{ sid }} .mvb__btn { margin-top: 18px; min-height: 44px; padding: 0 26px; border-radius: 6px; font-size: 14px; letter-spacing: 0.05em; }
     {%- if section.settings.alignment == 'center' -%}
       #mvb-{{ sid }} .mvb__btn { margin-left: auto; margin-right: auto; }
     {%- endif -%}
@@ -180,7 +181,7 @@
     ] },
     { "type": "range", "id": "overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Abdunklung", "default": 35 },
     { "type": "range", "id": "height_desktop", "min": 300, "max": 900, "step": 20, "unit": "px", "label": "Mindesthöhe Desktop", "default": 640 },
-    { "type": "range", "id": "height_mobile", "min": 300, "max": 800, "step": 20, "unit": "px", "label": "Mindesthöhe Handy", "default": 460 },
+    { "type": "range", "id": "height_mobile", "min": 300, "max": 800, "step": 20, "unit": "px", "label": "Mindesthöhe Handy", "default": 400 },
     { "type": "checkbox", "id": "mobile_bottom", "label": "Handy: Text unten im Bild", "default": true, "info": "So bleibt oben mehr vom Bild sichtbar." },
     { "type": "select", "id": "alignment", "label": "Textausrichtung", "default": "left", "options": [
       { "value": "left", "label": "Links" },
