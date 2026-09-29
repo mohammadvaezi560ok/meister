@@ -94,6 +94,7 @@
   #mvf-{{ sid }} .mvf__arrow--next { right: 1.5rem; }
   @media screen and (min-width: 990px) { #mvf-{{ sid }} .mvf__arrow { display: block; } }
 
+  #mvf-{{ sid }} .mvf__dots[hidden] { display: none; }
   #mvf-{{ sid }} .mvf__dots { display: flex; justify-content: center; gap: 10px; margin-top: 24px; }
   #mvf-{{ sid }} .mvf__dot {
     width: 8px;
@@ -107,6 +108,16 @@
     transition: opacity 0.2s, transform 0.2s;
   }
   #mvf-{{ sid }} .mvf__dot[aria-current='true'] { opacity: 1; transform: scale(1.25); }
+
+  @media screen and (max-width: 749px) {
+    #mvf-{{ sid }} .mvf__heading { margin-bottom: 22px; }
+    #mvf-{{ sid }} .mvf__track { gap: 12px; }
+    #mvf-{{ sid }} .mvf__card { padding: 24px 20px 26px; border-radius: 18px; }
+    #mvf-{{ sid }} .mvf__icon { width: 50px; height: 50px; margin-bottom: 12px; }
+    #mvf-{{ sid }} .mvf__title { font-size: 18px; margin-bottom: 8px; }
+    #mvf-{{ sid }} .mvf__text { font-size: 14.5px; line-height: 1.7; }
+    #mvf-{{ sid }} .mvf__dots { margin-top: 18px; }
+  }
 </style>
 
 <div id="mvf-{{ sid }}" class="mvf">

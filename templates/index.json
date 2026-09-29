@@ -17,7 +17,8 @@
         "text_color": "#ffffff",
         "button_bg": "#ffffff",
         "button_text": "#0d1b4f",
-        "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)"
+        "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)",
+        "mobile_bottom": true
       }
     },
     "mission": {
@@ -36,7 +37,8 @@
         "text_color": "#ffffff",
         "button_bg": "#ffffff",
         "button_text": "#0d1b4f",
-        "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)"
+        "fallback_bg": "linear-gradient(135deg, #0d1b4f 0%, #1c2f73 100%)",
+        "mobile_bottom": true
       }
     },
     "features": {
@@ -210,7 +212,10 @@
         "star_color": "#f5b400",
         "perk_color": "#1fbf6b",
         "padding_top": 48,
-        "padding_bottom": 48
+        "padding_bottom": 48,
+        "show_sticky": true,
+        "sticky_title": "Modava Kniekissen",
+        "sticky_button": "In den Warenkorb"
       }
     },
     "comparison": {
@@ -406,10 +411,84 @@
         "padding_top": 56,
         "padding_bottom": 64
       }
+    },
+    "marquee": {
+      "type": "mv-marquee",
+      "blocks": {
+        "item_1": {
+          "type": "text",
+          "settings": {
+            "icon": "truck",
+            "text": "Kostenloser Versand"
+          }
+        },
+        "item_2": {
+          "type": "text",
+          "settings": {
+            "icon": "foam",
+            "text": "Formstabiler Memory-Schaum"
+          }
+        },
+        "item_3": {
+          "type": "text",
+          "settings": {
+            "icon": "spine",
+            "text": "Ergonomische Konturform"
+          }
+        },
+        "item_4": {
+          "type": "text",
+          "settings": {
+            "icon": "wash",
+            "text": "Abnehmbarer, waschbarer Bezug"
+          }
+        },
+        "item_5": {
+          "type": "text",
+          "settings": {
+            "icon": "moon",
+            "text": "Für Seitenschläfer entwickelt"
+          }
+        },
+        "item_6": {
+          "type": "text",
+          "settings": {
+            "icon": "heart",
+            "text": "Ideal in der Schwangerschaft"
+          }
+        },
+        "item_7": {
+          "type": "text",
+          "settings": {
+            "icon": "check",
+            "text": "Bis zu 30 % Mengenrabatt"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_7"
+      ],
+      "settings": {
+        "heading": "",
+        "speed": 36,
+        "logo_height": 30,
+        "bg": "#ffffff",
+        "text_color": "#111111",
+        "icon_color": "#0d1b4f",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
     }
   },
   "order": [
     "hero",
+    "marquee",
     "mission",
     "features",
     "product",

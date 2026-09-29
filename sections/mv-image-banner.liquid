@@ -106,6 +106,22 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   #mvb-{{ sid }} .mvb__btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+
+  @media screen and (max-width: 749px) {
+    #mvb-{{ sid }} .mvb__inner { padding: 44px 20px 40px; }
+    #mvb-{{ sid }} .mvb__heading { margin-bottom: 14px; font-size: clamp(26px, 7.4vw, 34px); }
+    #mvb-{{ sid }} .mvb__text { font-size: 15px; line-height: 1.65; letter-spacing: 0.02em; }
+    #mvb-{{ sid }} .mvb__btn { display: flex; width: 100%; max-width: 360px; margin-top: 22px; font-size: 16px; }
+    {%- if section.settings.alignment == 'center' -%}
+      #mvb-{{ sid }} .mvb__btn { margin-left: auto; margin-right: auto; }
+    {%- endif -%}
+    {%- if section.settings.mobile_bottom and section.settings.image != blank -%}
+      #mvb-{{ sid }} { align-items: flex-end; }
+      #mvb-{{ sid }} .mvb__overlay {
+        background: linear-gradient(0deg, rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 100.0 | plus: 0.3 }}) 0%, rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 100.0 }}) 55%, rgba(0, 0, 0, {{ section.settings.overlay | divided_by: 300.0 }}) 100%);
+      }
+    {%- endif -%}
+  }
 </style>
 
 <div id="mvb-{{ sid }}" class="mvb">
@@ -165,6 +181,7 @@
     { "type": "range", "id": "overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Abdunklung", "default": 35 },
     { "type": "range", "id": "height_desktop", "min": 300, "max": 900, "step": 20, "unit": "px", "label": "Mindesthöhe Desktop", "default": 640 },
     { "type": "range", "id": "height_mobile", "min": 300, "max": 800, "step": 20, "unit": "px", "label": "Mindesthöhe Handy", "default": 520 },
+    { "type": "checkbox", "id": "mobile_bottom", "label": "Handy: Text unten im Bild", "default": true, "info": "So bleibt oben mehr vom Bild sichtbar." },
     { "type": "select", "id": "alignment", "label": "Textausrichtung", "default": "left", "options": [
       { "value": "left", "label": "Links" },
       { "value": "center", "label": "Mittig" }

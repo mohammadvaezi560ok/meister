@@ -1,0 +1,170 @@
+{%- comment -%}
+  "Gezielte Entlastung für Seitenschläfer" – Karten mit Illustration oben und
+  dunkelblauem Textfeld unten, als Slider (Handy 1, Tablet 2, Desktop 3).
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+{%- assign heading_font_bold = settings.type_header_font | font_modify: 'weight', 'bold' -%}
+
+<style>
+  {{ heading_font_bold | font_face: font_display: 'swap' }}
+
+  #mvrc-{{ sid }} {
+    --mvrc-accent: {{ section.settings.accent }};
+    background: {{ section.settings.bg }};
+    padding: {{ section.settings.padding_top | times: 0.6 | round: 0 }}px 0 {{ section.settings.padding_bottom | times: 0.6 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #mvrc-{{ sid }} { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+  }
+  #mvrc-{{ sid }} .mvrc__heading {
+    margin: 0 0 28px;
+    padding: 0 20px;
+    text-align: center;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: clamp(24px, 3.2vw, 34px);
+    line-height: 1.2;
+    color: var(--mvrc-accent);
+  }
+  #mvrc-{{ sid }} .mvrc__wrap { position: relative; max-width: var(--page-width, 1200px); margin: 0 auto; padding: 0 16px; }
+  @media screen and (min-width: 990px) { #mvrc-{{ sid }} .mvrc__wrap { padding: 0 5rem; } }
+  #mvrc-{{ sid }} .mvrc__track {
+    list-style: none;
+    margin: 0;
+    padding: 2px 0 6px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    align-items: stretch;
+  }
+  #mvrc-{{ sid }} .mvrc__track::-webkit-scrollbar { display: none; }
+  @media screen and (min-width: 750px) { #mvrc-{{ sid }} .mvrc__track { grid-auto-columns: calc((100% - 24px) / 2); gap: 24px; } }
+  @media screen and (min-width: 990px) { #mvrc-{{ sid }} .mvrc__track { grid-auto-columns: calc((100% - 70px) / 3); gap: 35px; } }
+  #mvrc-{{ sid }} .mvrc__card { scroll-snap-align: start; display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #fff; }
+  #mvrc-{{ sid }} .mvrc__img { aspect-ratio: 1 / 1; background: #fff; border: 1px solid #eceef3; border-bottom: 0; border-radius: 14px 14px 0 0; overflow: hidden; }
+  #mvrc-{{ sid }} .mvrc__img svg, #mvrc-{{ sid }} .mvrc__img img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  #mvrc-{{ sid }} .mvrc__box {
+    flex: 1;
+    background: linear-gradient(160deg, var(--mvrc-accent) 0%, {{ section.settings.accent_2 }} 100%);
+    color: #fff;
+    padding: 20px 20px 22px;
+  }
+  #mvrc-{{ sid }} .mvrc__title {
+    margin: 0 0 10px;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    color: #fff;
+  }
+  #mvrc-{{ sid }} .mvrc__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  #mvrc-{{ sid }} .mvrc__list li { position: relative; padding-left: 14px; font-size: 14px; line-height: 1.55; letter-spacing: 0.02em; color: rgba(255, 255, 255, 0.92); }
+  #mvrc-{{ sid }} .mvrc__list li::before { content: '•'; position: absolute; left: 0; top: 0; }
+
+  #mvrc-{{ sid }} .mvrc__arrow {
+    display: none;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    color: #1a1a1a;
+    cursor: pointer;
+  }
+  #mvrc-{{ sid }} .mvrc__arrow svg { width: 100%; height: 100%; display: block; }
+  #mvrc-{{ sid }} .mvrc__arrow[disabled] { opacity: 0.3; cursor: default; }
+  #mvrc-{{ sid }} .mvrc__arrow--prev { left: 1.5rem; }
+  #mvrc-{{ sid }} .mvrc__arrow--next { right: 1.5rem; }
+  @media screen and (min-width: 990px) { #mvrc-{{ sid }} .mvrc__arrow { display: block; } }
+  #mvrc-{{ sid }} .mvrc__dots[hidden] { display: none; }
+  #mvrc-{{ sid }} .mvrc__dots { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+  #mvrc-{{ sid }} .mvrc__dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #1a1a1a; opacity: 0.25; cursor: pointer; }
+  #mvrc-{{ sid }} .mvrc__dot[aria-current='true'] { opacity: 1; transform: scale(1.25); }
+</style>
+
+<div id="mvrc-{{ sid }}" class="mvrc" data-mv-slider>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="mvrc__heading">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+  <div class="mvrc__wrap">
+    <button type="button" class="mvrc__arrow mvrc__arrow--prev" data-prev aria-label="Zurück">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <ul class="mvrc__track" data-track>
+      {%- for block in section.blocks -%}
+        <li class="mvrc__card" {{ block.shopify_attributes }}>
+          <div class="mvrc__img">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 33vw, 84vw', alt: block.settings.title }}
+            {%- else -%}
+              {%- render 'mv-illustration', name: block.settings.illustration, uid: block.id -%}
+            {%- endif -%}
+          </div>
+          <div class="mvrc__box">
+            <h3 class="mvrc__title">{{ block.settings.title | escape }}</h3>
+            {%- assign points = block.settings.points | newline_to_br | split: '<br />' -%}
+            <ul class="mvrc__list">
+              {%- for point in points -%}
+                {%- assign point_text = point | strip -%}
+                {%- if point_text != blank -%}<li>{{ point_text | escape }}</li>{%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+    <button type="button" class="mvrc__arrow mvrc__arrow--next" data-next aria-label="Weiter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <div class="mvrc__dots" data-dots data-dot-class="mvrc__dot"></div>
+  </div>
+</div>
+
+{%- assign slider_root = 'mvrc-' | append: sid -%}
+{%- render 'mv-slider-script', root_id: slider_root -%}
+
+{% schema %}
+{
+  "name": "Entlastungs-Karten",
+  "tag": "section",
+  "class": "section section-mv-relief-cards",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Gezielte Entlastung für Seitenschläfer" },
+    { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#ffffff" },
+    { "type": "color", "id": "accent", "label": "Überschrift & Kartenfarbe", "default": "#0d1b4f" },
+    { "type": "color", "id": "accent_2", "label": "Kartenfarbe (Verlauf)", "default": "#1c2f73" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Karte",
+      "settings": [
+        { "type": "select", "id": "illustration", "label": "Illustration", "default": "hip", "options": [
+          { "value": "hip", "label": "Hüfte & Becken" },
+          { "value": "spine", "label": "Wirbelsäule & Bein" },
+          { "value": "knee", "label": "Knie" },
+          { "value": "sleeper", "label": "Knie mit Kissen" }
+        ] },
+        { "type": "image_picker", "id": "image", "label": "Eigenes Bild (ersetzt die Illustration)" },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Titel" },
+        { "type": "textarea", "id": "points", "label": "Stichpunkte (eine Zeile pro Punkt)" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Entlastungs-Karten", "blocks": [ { "type": "card" }, { "type": "card" }, { "type": "card" } ] }
+  ]
+}
+{% endschema %}

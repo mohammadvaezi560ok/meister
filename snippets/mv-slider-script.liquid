@@ -1,0 +1,68 @@
+{%- comment -%}
+  Slider-Logik für Karten-Slider (Wischen, Pfeile, Punkte).
+  Erwartet im Element #root_id: [data-track], optional [data-prev], [data-next],
+  [data-dots] (mit data-dot-class für die Punkt-Klasse).
+  Aufruf: render 'mv-slider-script', root_id: slider_root  (vorher per assign bauen)
+{%- endcomment -%}
+<script>
+  (function () {
+    var root = document.getElementById({{ root_id | json }});
+    if (!root) return;
+    var track = root.querySelector('[data-track]');
+    if (!track) return;
+    var prev = root.querySelector('[data-prev]');
+    var next = root.querySelector('[data-next]');
+    var dotsWrap = root.querySelector('[data-dots]');
+    var dotClass = dotsWrap ? dotsWrap.getAttribute('data-dot-class') : '';
+    var cards = track.children;
+
+    function perView() {
+      if (!cards.length) return 1;
+      return Math.max(1, Math.round(track.clientWidth / cards[0].getBoundingClientRect().width));
+    }
+    function pageCount() { return Math.max(1, Math.ceil(cards.length / perView())); }
+    function currentPage() {
+      var max = track.scrollWidth - track.clientWidth;
+      if (max <= 0) return 0;
+      return Math.round((track.scrollLeft / max) * (pageCount() - 1));
+    }
+    function goTo(page) {
+      var target = cards[Math.min(page * perView(), cards.length - 1)];
+      if (target) track.scrollTo({ left: target.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    }
+    function update() {
+      var page = currentPage();
+      if (dotsWrap) {
+        Array.prototype.forEach.call(dotsWrap.children, function (dot, i) {
+          dot.setAttribute('aria-current', i === page ? 'true' : 'false');
+        });
+      }
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+    function renderDots() {
+      if (!dotsWrap) return update();
+      var count = pageCount();
+      dotsWrap.innerHTML = '';
+      dotsWrap.hidden = count < 2;
+      for (var i = 0; i < count; i++) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = dotClass;
+        dot.setAttribute('aria-label', 'Seite ' + (i + 1));
+        dot.addEventListener('click', goTo.bind(null, i));
+        dotsWrap.appendChild(dot);
+      }
+      update();
+    }
+    if (prev) prev.addEventListener('click', function () { goTo(Math.max(0, currentPage() - 1)); });
+    if (next) next.addEventListener('click', function () { goTo(Math.min(pageCount() - 1, currentPage() + 1)); });
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(renderDots, 150);
+    });
+    renderDots();
+  })();
+</script>

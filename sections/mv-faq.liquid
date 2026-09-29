@@ -47,6 +47,11 @@
   #mvq-{{ sid }} .mvq__answer { padding: 0 2px 18px; font-size: 15px; line-height: 1.7; letter-spacing: 0.02em; opacity: 0.85; }
   #mvq-{{ sid }} .mvq__answer p { margin: 0 0 10px; }
   #mvq-{{ sid }} .mvq__answer p:last-child { margin-bottom: 0; }
+  @media screen and (max-width: 749px) {
+    #mvq-{{ sid }} .mvq__heading { margin-bottom: 20px; }
+    #mvq-{{ sid }} summary { padding: 16px 2px; font-size: 15px; }
+    #mvq-{{ sid }} .mvq__answer { font-size: 14.5px; line-height: 1.65; }
+  }
 </style>
 
 <div id="mvq-{{ sid }}" class="mvq">

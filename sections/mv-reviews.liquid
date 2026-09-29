@@ -52,8 +52,41 @@
     align-items: start;
   }
   #mvr-{{ sid }} .mvr__list::-webkit-scrollbar { display: none; }
+  #mvr-{{ sid }} .mvr__wrap { position: relative; }
+  #mvr-{{ sid }} .mvr__list { scroll-behavior: smooth; }
+  @media screen and (min-width: 750px) {
+    #mvr-{{ sid }} .mvr__list { grid-auto-columns: calc((100% - 24px) / 2); gap: 24px; }
+  }
   @media screen and (min-width: 990px) {
-    #mvr-{{ sid }} .mvr__list { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); gap: 40px; overflow: visible; }
+    #mvr-{{ sid }} .mvr__list { grid-auto-columns: calc((100% - 80px) / 3); gap: 40px; }
+  }
+  #mvr-{{ sid }} .mvr__arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    color: #1a1a1a;
+    cursor: pointer;
+  }
+  #mvr-{{ sid }} .mvr__arrow svg { width: 100%; height: 100%; display: block; }
+  #mvr-{{ sid }} .mvr__arrow[disabled] { opacity: 0.3; cursor: default; }
+  #mvr-{{ sid }} .mvr__arrow--prev { left: 1.5rem; }
+  #mvr-{{ sid }} .mvr__arrow--next { right: 1.5rem; }
+  @media screen and (min-width: 990px) { #mvr-{{ sid }} .mvr__arrow { display: block; } }
+  #mvr-{{ sid }} .mvr__dots[hidden] { display: none; }
+  #mvr-{{ sid }} .mvr__dots { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+  #mvr-{{ sid }} .mvr__dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #1a1a1a; opacity: 0.25; cursor: pointer; }
+  #mvr-{{ sid }} .mvr__dot[aria-current='true'] { opacity: 1; transform: scale(1.25); }
+  @media screen and (max-width: 749px) {
+    #mvr-{{ sid }} .mvr__summary { flex-wrap: wrap; justify-content: center; font-size: 16px; }
+    #mvr-{{ sid }} .mvr__summary strong { font-size: 22px; }
+    #mvr-{{ sid }} .mvr__title { font-size: 17px; }
+    #mvr-{{ sid }} .mvr__text { font-size: 15px; line-height: 1.7; }
   }
   #mvr-{{ sid }} .mvr__card { scroll-snap-align: start; background: var(--mvr-card); border-radius: 14px; padding: 22px 22px 20px; text-align: center; }
   #mvr-{{ sid }} .mvr__card .mvr__stars { margin-bottom: 14px; }
@@ -80,7 +113,10 @@
   </div>
 
   <div class="mvr__wrap">
-    <ul class="mvr__list">
+    <button type="button" class="mvr__arrow mvr__arrow--prev" data-prev aria-label="Zurück">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <ul class="mvr__list" data-track>
       {%- for block in section.blocks -%}
         <li class="mvr__card" {{ block.shopify_attributes }}>
           <div class="mvr__stars" role="img" aria-label="{{ block.settings.stars }} von 5 Sternen">
@@ -98,8 +134,15 @@
         </li>
       {%- endfor -%}
     </ul>
+    <button type="button" class="mvr__arrow mvr__arrow--next" data-next aria-label="Weiter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <div class="mvr__dots" data-dots data-dot-class="mvr__dot"></div>
   </div>
 </div>
+
+{%- assign slider_root = 'mvr-' | append: sid -%}
+{%- render 'mv-slider-script', root_id: slider_root -%}
 
 {% schema %}
 {

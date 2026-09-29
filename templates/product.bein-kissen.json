@@ -107,6 +107,103 @@
         "star_color": "#f5b400",
         "perk_color": "#1fbf6b",
         "padding_top": 32,
+        "padding_bottom": 48,
+        "show_sticky": true,
+        "sticky_title": "Modava Kniekissen",
+        "sticky_button": "In den Warenkorb"
+      }
+    },
+    "image-text": {
+      "type": "mv-image-text",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "product_image": 2,
+            "title": "Entlastung ab der ersten Nacht",
+            "text": "<p>Wenn du morgens mit verspannter Hüfte oder steifem Rücken aufwachst, muss es nicht gleich eine neue Matratze sein.</p><p>Das Modava Kniekissen hält deine Beine im Schlaf auf dem richtigen Abstand. So kann das obere Bein nicht nach vorn rutschen und deine Wirbelsäule verdrehen.</p><p><strong>Einfach zwischen die Knie legen – und den Unterschied selbst spüren.</strong></p>"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "product_image": 5,
+            "title": "Warum Seitenschläfer verspannt aufwachen",
+            "text": "<p>Ohne Stütze zieht die Schwerkraft dein oberes Bein nach unten. Das Becken kippt, die Wirbelsäule verdreht sich – und das 6 bis 8 Stunden lang, jede Nacht.</p><p><strong>Oft liegt es nicht an der Matratze, sondern an der Position deiner Beine.</strong></p><p>Das Kniekissen aus formstabilem Memory-Schaum hält genau den Abstand, den dein Körper braucht – die ganze Nacht.</p>"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "product_image": 3,
+            "title": "Bleibt an Ort und Stelle. Geht nicht platt.",
+            "text": "<p>Viele Kniekissen rutschen weg, sobald man sich im Schlaf dreht, oder sind nach wenigen Wochen platt.</p><p>Das Modava Kniekissen wird mit einem Beingurt fixiert und bleibt so zwischen deinen Knien. Der Kern aus Memory-Schaum kehrt jeden Morgen in seine ursprüngliche Form zurück.</p><p><strong>Dazu ein abnehmbarer Bezug mit Reißverschluss – einfach waschen und fertig.</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3"
+      ],
+      "settings": {
+        "heading": "",
+        "first_image_right": true,
+        "bg": "#ffffff",
+        "heading_color": "#0d1b4f",
+        "text_color": "#14171f",
+        "padding_top": 48,
+        "padding_bottom": 56
+      }
+    },
+    "relief-cards": {
+      "type": "mv-relief-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "illustration": "hip",
+            "title": "Hüfte & unterer Rücken",
+            "points": "Hält die Hüften übereinander und die Wirbelsäule gerade\nVerhindert, dass das obere Bein nach vorn kippt und das Becken verdreht"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "illustration": "spine",
+            "title": "Becken & Ischias-Bereich",
+            "points": "Hält die Beine auf Abstand, damit sich das Becken nicht verdreht\nSorgt für eine entspannte Lage von Rücken und Beinen – die ganze Nacht"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "illustration": "knee",
+            "title": "Knie & Gelenke",
+            "points": "Die Knie liegen nicht mehr direkt aufeinander\nWeicher Memory-Schaum polstert und trennt die Gelenke"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "illustration": "sleeper",
+            "title": "Schwangerschaft",
+            "points": "Stabile Seitenlage – auch mit wachsendem Bauch\nEntlastet Hüfte und unteren Rücken beim Liegen"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "heading": "Gezielte Entlastung für Seitenschläfer",
+        "bg": "#ffffff",
+        "accent": "#0d1b4f",
+        "accent_2": "#1c2f73",
+        "padding_top": 40,
         "padding_bottom": 48
       }
     },
@@ -376,6 +473,8 @@
   },
   "order": [
     "main",
+    "image-text",
+    "relief-cards",
     "features",
     "comparison-table",
     "reviews",

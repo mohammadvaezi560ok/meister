@@ -250,11 +250,91 @@
   #mvp-{{ sid }} .mvp__desc img { max-width: 100%; height: auto; display: block; margin: 8px 0; border-radius: 8px; }
 
   @media screen and (max-width: 749px) {
-    #mvp-{{ sid }} .mvp__offer-head { padding: 14px 12px; gap: 10px; }
+    #mvp-{{ sid }} .mvp__grid { gap: 18px; padding: 0 14px; }
+    #mvp-{{ sid }} .mvp__main { border-radius: 10px; }
+    #mvp-{{ sid }} .mvp__thumbs-row { gap: 2px; }
+    #mvp-{{ sid }} .mvp__thumbs { gap: 8px; }
+    #mvp-{{ sid }} .mvp__thumb { flex-basis: calc((100% - 32px) / 5); border-radius: 6px; }
+    #mvp-{{ sid }} .mvp__nav { flex-basis: 34px; height: 40px; padding: 8px 6px; }
+    #mvp-{{ sid }} .mvp__rating { font-size: 13px; flex-wrap: wrap; }
+    #mvp-{{ sid }} .mvp__subtitle { font-size: 14px; }
+    #mvp-{{ sid }} .mvp__rule { margin: 14px 0 16px; }
+    #mvp-{{ sid }} .mvp__benefit-title { font-size: 14.5px; }
+    #mvp-{{ sid }} .mvp__benefit-text { font-size: 13px; }
+    #mvp-{{ sid }} .mvp__divider { font-size: 13px; }
+    #mvp-{{ sid }} .mvp__offers { gap: 18px; }
+    #mvp-{{ sid }} .mvp__offer-head { grid-template-columns: 22px minmax(0, 1fr) auto; padding: 16px 12px 14px; gap: 10px; }
     #mvp-{{ sid }} .mvp__offer-body { padding: 0 12px 14px; }
-    #mvp-{{ sid }} .mvp__offer-title { font-size: 15px; }
-    #mvp-{{ sid }} .mvp__atc { font-size: 16px; }
+    #mvp-{{ sid }} .mvp__offer-title { font-size: 15px; gap: 4px 8px; }
+    #mvp-{{ sid }} .mvp__offer-sub { font-size: 12px; }
+    #mvp-{{ sid }} .mvp__offer-price strong { font-size: 15px; }
+    #mvp-{{ sid }} .mvp__badge { top: -10px; right: 8px; font-size: 10px; padding: 3px 8px; }
+    #mvp-{{ sid }} .mvp__unit-num { width: 14px; }
+    /* 16px verhindert das automatische Hineinzoomen auf dem iPhone */
+    #mvp-{{ sid }} .mvp__select { flex: 1; min-width: 0; height: 42px; font-size: 16px; }
+    #mvp-{{ sid }} .mvp__unit-img { width: 42px; height: 42px; flex-basis: 42px; }
+    #mvp-{{ sid }} .mvp__atc { font-size: 16px; min-height: 54px; letter-spacing: 0.04em; }
+    #mvp-{{ sid }} .mvp__trust { gap: 6px 14px; font-size: 12px; }
   }
+
+  /* ---------- Feste Kaufleiste unten ---------- */
+  #mvp-{{ sid }} .mvp__sticky {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #e3e6ed;
+    box-shadow: 0 -6px 20px rgba(13, 27, 79, 0.08);
+    transform: translateY(110%);
+    transition: transform 0.25s ease;
+  }
+  #mvp-{{ sid }} .mvp__sticky.is-visible { transform: translateY(0); }
+  #mvp-{{ sid }} .mvp__sticky-img { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 6px; object-fit: cover; background: #f2f2f2; }
+  #mvp-{{ sid }} .mvp__sticky-info { flex: 1; min-width: 0; }
+  #mvp-{{ sid }} .mvp__sticky-title { margin: 0; font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #mvp-{{ sid }} .mvp__sticky-offer { margin: 2px 0 0; font-size: 12.5px; color: var(--mvp-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #mvp-{{ sid }} .mvp__sticky-btn {
+    flex: 0 0 auto;
+    min-height: 46px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--mvp-accent);
+    color: #fff;
+    font-family: {{ heading_font_bold.family }}, {{ heading_font_bold.fallback_families }};
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  #mvp-{{ sid }} .mvp__sticky-btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+  @media screen and (min-width: 990px) {
+    #mvp-{{ sid }} .mvp__sticky { padding-left: max(24px, calc((100vw - var(--page-width, 1200px)) / 2)); padding-right: max(24px, calc((100vw - var(--page-width, 1200px)) / 2)); }
+    #mvp-{{ sid }} .mvp__sticky-btn { padding: 0 32px; font-size: 15px; }
+  }
+  #mvp-{{ sid }} .mvp__sticky-price { font-weight: 700; color: var(--mvp-text); }
+  #mvp-{{ sid }} .mvp__sticky-qty { display: none; }
+  @media screen and (max-width: 749px) {
+    #mvp-{{ sid }} .mvp__sticky { gap: 10px; padding-left: 12px; padding-right: 12px; }
+    #mvp-{{ sid }} .mvp__sticky-title, #mvp-{{ sid }} .mvp__sticky-sep { display: none; }
+    #mvp-{{ sid }} .mvp__sticky-offer { display: flex; flex-direction: column; margin: 0; }
+    #mvp-{{ sid }} .mvp__sticky-name { display: none; }
+    #mvp-{{ sid }} .mvp__sticky-qty { display: block; font-size: 14px; font-weight: 700; color: var(--mvp-text); }
+    #mvp-{{ sid }} .mvp__sticky-price { font-size: 13px; font-weight: 600; color: var(--mvp-muted); }
+    #mvp-{{ sid }} .mvp__sticky-btn { min-height: 46px; padding: 0 16px; font-size: 13px; letter-spacing: 0.04em; }
+  }
+  @media screen and (max-width: 380px) {
+    #mvp-{{ sid }} .mvp__sticky-img { display: none; }
+    #mvp-{{ sid }} .mvp__sticky-btn { padding: 0 16px; font-size: 13px; }
+  }
+  html.mvp-sticky-on body { padding-bottom: 72px; }
 </style>
 
 <div id="mvp-{{ sid }}" class="mvp" data-section="{{ sid }}">
@@ -502,6 +582,19 @@
       </div>
     </div>
 
+    {%- if section.settings.show_sticky and p.available -%}
+      <div class="mvp__sticky" data-sticky aria-hidden="true">
+        {%- if p.featured_media -%}
+          <img class="mvp__sticky-img" src="{{ p.featured_media.preview_image | image_url: width: 120 }}" alt="" width="44" height="44" loading="lazy">
+        {%- endif -%}
+        <div class="mvp__sticky-info">
+          <p class="mvp__sticky-title">{{ section.settings.sticky_title | default: p.title | escape }}</p>
+          <p class="mvp__sticky-offer"><span class="mvp__sticky-name" data-sticky-name></span><span class="mvp__sticky-qty" data-sticky-qty data-unit-word="{{ section.settings.sticky_unit | escape }}"></span><span class="mvp__sticky-sep"> · </span><span class="mvp__sticky-price" data-sticky-price></span></p>
+        </div>
+        <button type="button" class="mvp__sticky-btn" data-sticky-btn tabindex="-1">{{ section.settings.sticky_button | escape }}</button>
+      </div>
+    {%- endif -%}
+
     <script type="application/json" data-variants>
       {
         "moneyFormat": {{ shop.money_format | json }},
@@ -617,6 +710,11 @@
     var atc = root.querySelector('[data-atc]');
     var errorEl = root.querySelector('[data-error]');
     var atcLabel = atc ? atc.textContent.trim() : '';
+    var sticky = root.querySelector('[data-sticky]');
+    var stickyName = root.querySelector('[data-sticky-name]');
+    var stickyPrice = root.querySelector('[data-sticky-price]');
+    var stickyQty = root.querySelector('[data-sticky-qty]');
+    var stickyBtn = root.querySelector('[data-sticky-btn]');
 
     function activeOffer() { return root.querySelector('[data-offer].is-active') || offers[0]; }
 
@@ -649,6 +747,13 @@
       });
       atc.disabled = soldOut;
       atc.textContent = soldOut ? 'Ausverkauft' : atcLabel + ' – ' + formatMoney(prices.final);
+      if (stickyName && stickyPrice) {
+        var titleEl = offer.querySelector('.mvp__offer-title');
+        stickyName.textContent = titleEl && titleEl.firstChild ? titleEl.firstChild.textContent.trim() : '';
+        stickyPrice.textContent = formatMoney(prices.final);
+        if (stickyQty) stickyQty.textContent = offer.dataset.qty + ' ' + stickyQty.dataset.unitWord;
+      }
+      if (stickyBtn) stickyBtn.disabled = soldOut;
     }
 
     offers.forEach(function (offer) {
@@ -704,6 +809,31 @@
       });
     }
 
+    /* ---------- Feste Kaufleiste: erscheint, sobald der Haupt-Button nach oben aus dem Bild gescrollt ist ---------- */
+    if (sticky && atc) {
+      var stickyShown = null;
+      var ticking = false;
+      var checkSticky = function () {
+        ticking = false;
+        var show = atc.getBoundingClientRect().bottom < 0;
+        if (show === stickyShown) return;
+        stickyShown = show;
+        sticky.classList.toggle('is-visible', show);
+        sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+        stickyBtn.tabIndex = show ? 0 : -1;
+        document.documentElement.classList.toggle('mvp-sticky-on', show);
+      };
+      var onScroll = function () {
+        if (!ticking) { ticking = true; window.requestAnimationFrame(checkSticky); }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      checkSticky();
+      stickyBtn.addEventListener('click', function () {
+        if (!atc.disabled) atc.click();
+      });
+    }
+
     refresh();
   })();
 </script>
@@ -727,6 +857,11 @@
     { "type": "text", "id": "trust_1", "label": "Vertrauenszeile 1", "default": "Kostenloser Versand" },
     { "type": "text", "id": "trust_2", "label": "Vertrauenszeile 2", "default": "Sichere Bezahlung" },
     { "type": "checkbox", "id": "show_description", "label": "Produktbeschreibung als Aufklapper zeigen", "default": true },
+    { "type": "header", "content": "Feste Kaufleiste unten" },
+    { "type": "checkbox", "id": "show_sticky", "label": "Kaufleiste anzeigen", "default": true, "info": "Erscheint, sobald man am Warenkorb-Button vorbeigescrollt ist." },
+    { "type": "text", "id": "sticky_title", "label": "Titel in der Leiste", "default": "Modava Kniekissen" },
+    { "type": "text", "id": "sticky_button", "label": "Button in der Leiste", "default": "In den Warenkorb" },
+    { "type": "text", "id": "sticky_unit", "label": "Einheit in der Leiste (Handy)", "default": "Kissen", "info": "Handy zeigt z. B. „2 Kissen“ + Preis." },
     { "type": "text", "id": "description_label", "label": "Titel des Aufklappers", "default": "Produktdetails" },
     { "type": "header", "content": "Farben" },
     { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#ffffff" },

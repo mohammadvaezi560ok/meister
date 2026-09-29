@@ -1,0 +1,98 @@
+{%- comment -%}
+  Anatomie-Linienzeichnungen mit roten "Druckpunkten" für die Entlastungs-Karten.
+  Aufruf: render 'mv-illustration', name: 'hip', uid: block.id
+{%- endcomment -%}
+<svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="glow-{{ uid }}">
+      <stop offset="0" stop-color="#ff2d2d" stop-opacity="0.85"/>
+      <stop offset="0.45" stop-color="#ff4d4d" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#ff6b6b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g stroke="#4a4a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  {%- case name -%}
+    {%- when 'hip' -%}
+      <!-- Wirbel -->
+      <rect x="132" y="18" width="36" height="16" rx="6"/>
+      <rect x="130" y="40" width="40" height="17" rx="6"/>
+      <rect x="128" y="63" width="44" height="18" rx="7"/>
+      <path d="M150 34v6M150 57v6"/>
+      <!-- Becken -->
+      <path d="M128 92c-20-8-52-8-70 10-16 16-14 44 2 62 8 9 12 20 10 32"/>
+      <path d="M172 92c20-8 52-8 70 10 16 16 14 44-2 62-8 9-12 20-10 32"/>
+      <path d="M128 92c-4 22-2 44 10 62l12 14 12-14c12-18 14-40 10-62"/>
+      <path d="M86 140c10-4 22-2 30 6M214 140c-10-4-22-2-30 6"/>
+      <ellipse cx="110" cy="196" rx="20" ry="14"/>
+      <ellipse cx="190" cy="196" rx="20" ry="14"/>
+      <path d="M126 180c8 10 40 10 48 0"/>
+      <!-- Oberschenkel -->
+      <circle cx="84" cy="176" r="15"/>
+      <circle cx="216" cy="176" r="15"/>
+      <path d="M78 190l-10 100M96 188l2 102M222 190l10 100M204 188l-2 102"/>
+      <path d="M40 30c-8 80-6 180 6 270M260 30c8 80 6 180-6 270"/>
+    {%- when 'spine' -%}
+      <!-- Wirbelsäule seitlich (S-Kurve) -->
+      <path d="M150 14c-14 26-14 50 0 76s16 56-2 86"/>
+      <g>
+        <rect x="140" y="18" width="22" height="11" rx="4" transform="rotate(-12 151 23)"/>
+        <rect x="134" y="36" width="22" height="11" rx="4" transform="rotate(-6 145 41)"/>
+        <rect x="132" y="54" width="22" height="11" rx="4"/>
+        <rect x="134" y="72" width="22" height="11" rx="4" transform="rotate(8 145 77)"/>
+        <rect x="140" y="90" width="22" height="11" rx="4" transform="rotate(14 151 95)"/>
+        <rect x="146" y="108" width="22" height="11" rx="4" transform="rotate(10 157 113)"/>
+        <rect x="148" y="126" width="22" height="11" rx="4"/>
+        <rect x="146" y="144" width="22" height="11" rx="4" transform="rotate(-10 157 149)"/>
+      </g>
+      <!-- Becken + Bein -->
+      <path d="M130 160c10-12 50-14 62 2 10 14 4 34-14 40-16 6-40 0-50-12-6-8-6-20 2-30z"/>
+      <circle cx="176" cy="200" r="13"/>
+      <path d="M170 212c-10 30-18 58-20 84M186 210c0 30-2 58-4 86"/>
+      <path d="M96 20c-20 60-24 120 0 170 10 22 20 60 22 106M214 30c18 50 22 100 10 150-6 24-6 70 0 116"/>
+      <!-- Nerv -->
+      <path d="M156 150c8 30 20 50 18 80-2 26-14 44-16 66" stroke="#e03131" stroke-width="3.5"/>
+      <path d="M164 150c10 28 22 50 20 80-2 26-12 44-14 66" stroke="#7fc8e8" stroke-width="2" stroke-dasharray="3 5"/>
+    {%- when 'knee' -%}
+      <!-- zwei Beine, Knie aufeinander -->
+      <path d="M96 10c10 50 14 90 18 120M140 10c-2 46-4 88-2 124"/>
+      <path d="M160 10c6 46 10 90 12 124M204 10c-4 44-8 86-8 124"/>
+      <ellipse cx="126" cy="146" rx="26" ry="20"/>
+      <ellipse cx="184" cy="146" rx="26" ry="20"/>
+      <path d="M108 164c-4 44-8 86-4 126M142 164c2 44 2 86-2 126"/>
+      <path d="M168 164c-2 44-4 86 0 126M200 164c4 44 6 86 2 126"/>
+      <path d="M112 196c6 30 8 60 4 92M190 196c-6 30-8 60-4 92"/>
+      <path d="M40 120c30 10 60 34 76 26M270 120c-30 10-60 34-76 26" stroke="#7fc8e8" stroke-width="2"/>
+    {%- else -%}
+      <!-- Knie von vorn, Kniekissen dazwischen -->
+      <path d="M62 10c10 50 16 90 22 118M112 10c-4 50-6 90-6 118"/>
+      <path d="M238 10c-10 50-16 90-22 118M188 10c4 50 6 90 6 118"/>
+      <ellipse cx="94" cy="148" rx="26" ry="20"/>
+      <ellipse cx="206" cy="148" rx="26" ry="20"/>
+      <path d="M76 166c-4 44-6 84-2 124M110 166c4 44 4 84 0 124"/>
+      <path d="M224 166c4 44 6 84 2 124M190 166c-4 44-4 84 0 124"/>
+      <path d="M26 132c16 6 28 14 40 12M274 132c-16 6-28 14-40 12" stroke="#7fc8e8"/>
+      <path d="M22 158c18 2 30 0 42-4M278 158c-18 2-30 0-42-4" stroke="#7fc8e8"/>
+  {%- endcase -%}
+  </g>
+  {%- case name -%}
+    {%- when 'hip' -%}
+      <circle cx="150" cy="72" r="30" fill="url(#glow-{{ uid }})"/>
+      <circle cx="96" cy="136" r="38" fill="url(#glow-{{ uid }})"/>
+      <circle cx="204" cy="136" r="38" fill="url(#glow-{{ uid }})"/>
+      <circle cx="84" cy="176" r="32" fill="url(#glow-{{ uid }})"/>
+      <circle cx="216" cy="176" r="32" fill="url(#glow-{{ uid }})"/>
+    {%- when 'spine' -%}
+      <circle cx="158" cy="132" r="34" fill="url(#glow-{{ uid }})"/>
+      <circle cx="172" cy="196" r="32" fill="url(#glow-{{ uid }})"/>
+      <circle cx="166" cy="262" r="26" fill="url(#glow-{{ uid }})"/>
+    {%- when 'knee' -%}
+      <circle cx="128" cy="146" r="46" fill="url(#glow-{{ uid }})"/>
+      <circle cx="182" cy="146" r="46" fill="url(#glow-{{ uid }})"/>
+    {%- else -%}
+      <path d="M124 108c16 12 36 12 52 0 12 22 12 60 0 82-16-12-36-12-52 0-12-22-12-60 0-82z" fill="#0d1b4f"/>
+      <g fill="#fff" opacity="0.7">
+        <circle cx="138" cy="130" r="2"/><circle cx="162" cy="130" r="2"/><circle cx="150" cy="148" r="2"/>
+        <circle cx="138" cy="166" r="2"/><circle cx="162" cy="166" r="2"/>
+      </g>
+  {%- endcase -%}
+</svg>

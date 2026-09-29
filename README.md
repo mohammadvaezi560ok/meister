@@ -33,3 +33,14 @@ Die Rabatte der Angebote (2 Kissen −20 %, 3 Kissen −30 %) werden nur angezei
 Abgezogen werden sie an der Kasse durch zwei automatische Rabatte in Shopify
 (Rabatte → „Doppelpack −20 %“ und „Familienpaket −30 %“). Werden Prozentsätze
 geändert, müssen Section-Einstellung **und** automatischer Rabatt angepasst werden.
+
+### Update: Handy-Optimierung & neue Produktseiten-Bereiche
+
+| Datei | Inhalt |
+|---|---|
+| `sections/mv-image-text.liquid` | Abwechselnde Bild/Video-Text-Zeilen („Entlastung ab der ersten Nacht“ …), Videos laufen stumm in Schleife |
+| `sections/mv-relief-cards.liquid` + `snippets/mv-illustration.liquid` | „Gezielte Entlastung für Seitenschläfer“ – Karten-Slider mit Anatomie-Zeichnungen |
+| `sections/mv-marquee.liquid` | Laufband mit Vorteilen (Startseite, unter dem Hero) |
+| `snippets/mv-slider-script.liquid` | Gemeinsame Slider-Logik (Wischen, Pfeile, Punkte) |
+| `sections/mv-reviews.liquid` | jetzt als Slider – nur mit echten Bewertungen einschalten |
+| `sections/mv-product.liquid` | feste Kaufleiste unten + Handy-Feinschliff (u. a. 16px-Auswahlfelder gegen iPhone-Zoom) |
