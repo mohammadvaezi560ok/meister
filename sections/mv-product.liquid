@@ -314,6 +314,7 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    align-items: start;
   }
   #mvp-{{ sid }} .mvp__reviews-track::-webkit-scrollbar { display: none; }
   #mvp-{{ sid }} .mvp__review { scroll-snap-align: start; background: #f5f6f9; border-radius: 10px; padding: 16px 18px; }
@@ -679,7 +680,7 @@
                   {%- if review.reviewer_name != blank -%}
                     <p class="mvp__review-author">{{ review.reviewer_name | escape }}</p>
                   {%- endif -%}
-                  {%- if review.transparency_badges contains 'review_collected_from_another_provider' -%}
+                  {%- if section.settings.imported_note != blank and review.transparency_badges contains 'review_collected_from_another_provider' -%}
                     <p class="mvp__review-source">{{ section.settings.imported_note | escape }}</p>
                   {%- endif -%}
                 </li>
@@ -1008,7 +1009,7 @@
     { "type": "paragraph", "content": "Block „Bewertung“ hinzufügen – nur echte Bewertungen eintragen. Oder eine Bewertungs-App (z. B. Judge.me) installieren und deren App-Block hier einfügen." },
     { "type": "text", "id": "reviews_heading", "label": "Überschrift", "default": "Das sagen unsere Kunden" },
     { "type": "checkbox", "id": "use_judgeme", "label": "Judge.me-Bewertungen automatisch anzeigen", "default": true, "info": "Zeigt die Bewertungen aus Judge.me im Slider und die Sterne über dem Titel." },
-    { "type": "text", "id": "imported_note", "label": "Hinweis bei importierten Bewertungen", "default": "Bewertung von einem anderen Marktplatz übernommen" },
+    { "type": "text", "id": "imported_note", "label": "Hinweis bei importierten Bewertungen (optional)", "info": "Leer = kein Hinweis." },
     { "type": "header", "content": "Feste Kaufleiste unten" },
     { "type": "checkbox", "id": "show_sticky", "label": "Kaufleiste anzeigen", "default": true, "info": "Erscheint, sobald man am Warenkorb-Button vorbeigescrollt ist." },
     { "type": "text", "id": "sticky_title", "label": "Titel in der Leiste", "default": "Modava Kniekissen" },
