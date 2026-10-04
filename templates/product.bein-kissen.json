@@ -1,101 +1,279 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "mv-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "benefit_1": {
+          "type": "benefit",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "title": "Entlastet Hüfte und unteren Rücken",
+            "text": "Hält die Beine parallel und die Wirbelsäule in einer Linie"
           }
         },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "variant_picker": {
-          "type": "variant_picker",
+        "benefit_2": {
+          "type": "benefit",
           "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
+            "title": "Kein Druck mehr zwischen den Knien",
+            "text": "Die Knie liegen nicht mehr direkt aufeinander"
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {}
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
+        "benefit_3": {
+          "type": "benefit",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "title": "Ideal für Seitenschläfer & Schwangere",
+            "text": "Stabile, entspannte Seitenlage die ganze Nacht"
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
+        "benefit_4": {
+          "type": "benefit",
           "settings": {
-            "share_label": "Share"
+            "title": "Formstabiler Memory-Schaum",
+            "text": "Passt sich deinem Körper an und geht nicht platt"
+          }
+        },
+        "benefit_5": {
+          "type": "benefit",
+          "settings": {
+            "title": "Abnehmbarer, waschbarer Bezug",
+            "text": "Atmungsaktiv, hygienisch und angenehm auf der Haut"
+          }
+        },
+        "offer_1": {
+          "type": "offer",
+          "settings": {
+            "quantity": 1,
+            "title": "Einzelkissen",
+            "subtitle": "1 ergonomisches Kniekissen",
+            "discount_percent": 0,
+            "badge": "",
+            "badge_star": true,
+            "perks": "Kostenloser Versand",
+            "selected": false
+          }
+        },
+        "offer_2": {
+          "type": "offer",
+          "settings": {
+            "quantity": 2,
+            "title": "Doppelpack (2 Kissen)",
+            "subtitle": "Für dich und deinen Partner – oder als Ersatz, wenn der Bezug in der Wäsche ist",
+            "discount_percent": 20,
+            "badge": "Unsere Empfehlung",
+            "badge_star": true,
+            "perks": "Kostenloser Versand\n20 % Mengenrabatt – automatisch an der Kasse\nFarbe für jedes Kissen frei wählbar",
+            "selected": true
+          }
+        },
+        "offer_3": {
+          "type": "offer",
+          "settings": {
+            "quantity": 3,
+            "title": "Familienpaket (3 Kissen)",
+            "subtitle": "Für die ganze Familie oder zum Verschenken",
+            "discount_percent": 30,
+            "badge": "Bester Preis",
+            "badge_star": false,
+            "perks": "Kostenloser Versand\n30 % Mengenrabatt – automatisch an der Kasse\nFarbe für jedes Kissen frei wählbar",
+            "selected": false
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description",
-        "share"
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "benefit_5",
+        "offer_1",
+        "offer_2",
+        "offer_3"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "color_scheme": "scheme-1",
-        "media_size": "medium",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "mobile_thumbnails": "hide",
-        "media_position": "left",
-        "image_zoom": "lightbox",
-        "hide_variants": false,
-        "enable_video_looping": false,
-        "padding_top": 24,
-        "padding_bottom": 24
+        "product": "",
+        "rating_text": "4,8 / 5 · 10 Bewertungen",
+        "title_override": "Modava Kniekissen – ergonomisch für Seitenschläfer",
+        "subtitle": "Endlich entspannt auf der Seite schlafen – ab der ersten Nacht",
+        "offers_label": "Wähle dein Set",
+        "variant_label": "Farbe",
+        "value_names": "Dark gray=Dunkelgrau\nLight gray=Hellgrau\nGreen=Grün\nNavy blue=Marineblau",
+        "button_label": "In den Warenkorb",
+        "trust_1": "Kostenloser Versand",
+        "trust_2": "Sichere Bezahlung",
+        "show_description": false,
+        "mobile_image_ratio": "5 / 4",
+        "reviews_heading": "Das sagen unsere Kunden",
+        "show_sticky": true,
+        "sticky_title": "Modava Kniekissen",
+        "sticky_button": "In den Warenkorb",
+        "sticky_unit": "Kissen",
+        "description_label": "Produktdetails",
+        "bg": "#ffffff",
+        "text_color": "#14171f",
+        "accent": "#0d1b4f",
+        "accent_soft": "#e7ecf8",
+        "star_color": "#f5b400",
+        "perk_color": "#1fbf6b",
+        "padding_top": 32,
+        "padding_bottom": 48
       }
     },
-    "related-products": {
-      "type": "related-products",
+    "image-text": {
+      "type": "mv-image-text",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "product_image": 2,
+            "title": "Entlastung ab der ersten Nacht",
+            "text": "<p>Wenn du morgens mit verspannter Hüfte oder steifem Rücken aufwachst, muss es nicht gleich eine neue Matratze sein.</p><p>Das Modava Kniekissen hält deine Beine im Schlaf auf dem richtigen Abstand. So kann das obere Bein nicht nach vorn rutschen und deine Wirbelsäule verdrehen.</p><p><strong>Einfach zwischen die Knie legen – und den Unterschied selbst spüren.</strong></p>"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "product_image": 5,
+            "title": "Warum Seitenschläfer verspannt aufwachen",
+            "text": "<p>Ohne Stütze zieht die Schwerkraft dein oberes Bein nach unten. Das Becken kippt, die Wirbelsäule verdreht sich – und das 6 bis 8 Stunden lang, jede Nacht.</p><p><strong>Oft liegt es nicht an der Matratze, sondern an der Position deiner Beine.</strong></p><p>Das Kniekissen aus formstabilem Memory-Schaum hält genau den Abstand, den dein Körper braucht – die ganze Nacht.</p>"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "product_image": 3,
+            "title": "Bleibt an Ort und Stelle. Geht nicht platt.",
+            "text": "<p>Viele Kniekissen rutschen weg, sobald man sich im Schlaf dreht, oder sind nach wenigen Wochen platt.</p><p>Das Modava Kniekissen wird mit einem Beingurt fixiert und bleibt so zwischen deinen Knien. Der Kern aus Memory-Schaum kehrt jeden Morgen in seine ursprüngliche Form zurück.</p><p><strong>Dazu ein abnehmbarer Bezug mit Reißverschluss – einfach waschen und fertig.</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3"
+      ],
       "settings": {
-        "heading": "You may also like",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "padding_top": 36,
-        "padding_bottom": 68
+        "heading": "",
+        "product": "",
+        "first_image_right": true,
+        "mobile_ratio": "4 / 3",
+        "bg": "#ffffff",
+        "heading_color": "#0d1b4f",
+        "text_color": "#14171f",
+        "padding_top": 48,
+        "padding_bottom": 56
       }
     },
-    "disclosures": {
-      "type": "disclosures",
+    "relief-cards": {
+      "type": "mv-relief-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "illustration": "hip",
+            "title": "Hüfte & unterer Rücken",
+            "points": "Hält die Hüften übereinander und die Wirbelsäule gerade\nVerhindert, dass das obere Bein nach vorn kippt und das Becken verdreht"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "illustration": "spine",
+            "title": "Becken & Ischias-Bereich",
+            "points": "Hält die Beine auf Abstand, damit sich das Becken nicht verdreht\nSorgt für eine entspannte Lage von Rücken und Beinen – die ganze Nacht"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "illustration": "knee",
+            "title": "Knie & Gelenke",
+            "points": "Die Knie liegen nicht mehr direkt aufeinander\nWeicher Memory-Schaum polstert und trennt die Gelenke"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "illustration": "sleeper",
+            "title": "Schwangerschaft",
+            "points": "Stabile Seitenlage – auch mit wachsendem Bauch\nEntlastet Hüfte und unteren Rücken beim Liegen"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
+        "heading": "Gezielte Entlastung für Seitenschläfer",
+        "bg": "#ffffff",
+        "accent": "#0d1b4f",
+        "accent_2": "#1c2f73",
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
+    },
+    "features": {
+      "type": "mv-features",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "spine",
+            "title": "Ergonomische Form",
+            "text": "Die Konturform passt genau zwischen die Knie und hält Hüfte, Becken und Wirbelsäule in einer natürlichen Linie."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "moon",
+            "title": "Erholsamer schlafen",
+            "text": "Weniger Druck auf Knie und Hüfte heißt weniger Umherwälzen in der Nacht – und entspannteres Aufwachen am Morgen."
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "foam",
+            "title": "Formstabiler Memory-Schaum",
+            "text": "Der Schaum passt sich deinem Körper an und nimmt danach wieder seine ursprüngliche Form an – Nacht für Nacht."
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "icon": "wash",
+            "title": "Waschbarer Bezug",
+            "text": "Der atmungsaktive Bezug lässt sich einfach abnehmen und waschen – für ein frisches, hygienisches Schlafgefühl."
+          }
+        },
+        "card_5": {
+          "type": "card",
+          "settings": {
+            "icon": "heart",
+            "title": "Vielseitig einsetzbar",
+            "text": "Ideal in der Schwangerschaft, nach langem Sitzen oder Stehen – oder in Rückenlage als Stütze unter den Knien."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5"
+      ],
+      "settings": {
+        "heading": "Was uns anders macht",
+        "bg": "#ffffff",
+        "heading_color": "#0d1b4f",
+        "card_bg": "#f3f3f3",
+        "icon_color": "#111111",
+        "title_color": "#1a1a1a",
+        "text_color": "#3d3d3d",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "comparison-table": {
@@ -123,7 +301,7 @@
           "type": "row",
           "settings": {
             "left_title": "Atmungsaktiver, waschbarer Bezug",
-            "left_text": "Abnehmbarer Bezug für ein frisches, hygienisches Schlafgefühl – einfach in die Waschmaschine.",
+            "left_text": "Abnehmbarer Bezug für ein frisches, hygienisches Schlafgefühl.",
             "right_title": "Kein abnehmbarer Bezug",
             "right_text": "Schwer zu reinigen und staut Wärme, was zu unruhigem Schlaf führt."
           }
@@ -131,8 +309,8 @@
         "row_4": {
           "type": "row",
           "settings": {
-            "left_title": "Spürbare Entlastung (Seitenschläfer)",
-            "left_text": "Reduziert den Druck auf Hüfte, Knie und unteren Rücken – für erholsamen Schlaf, Nacht für Nacht.",
+            "left_title": "Spürbare Entlastung für Seitenschläfer",
+            "left_text": "Reduziert den Druck auf Hüfte, Knie und unteren Rücken – für erholsamen Schlaf.",
             "right_title": "Überteuert",
             "right_text": "Orthopädische Spezialkissen kosten oft 50 €+ – mit Funktionen, die du gar nicht brauchst."
           }
@@ -145,37 +323,39 @@
         "row_4"
       ],
       "settings": {
-        "eyebrow": "Was macht Modava anders?",
+        "eyebrow": "Modava vs. normale Kissen",
         "heading": "Gebaut für echte Erholung.",
         "subheading": "Ergonomische Form schlägt gewöhnliche Kissen. Jede Nacht.",
         "left_label": "Modava",
         "right_label": "Andere Kissen",
         "show_annotation": true,
         "annotation": "Die beste Lösung",
-        "frame_bg": "#ece4d8",
+        "page_bg": "#ffffff",
+        "eyebrow_color": "#0d1b4f",
+        "heading_color": "#0d1b4f",
+        "sub_color": "#5f6470",
+        "frame_bg": "#e7ecf8",
         "left_bg": "#ffffff",
-        "right_bg": "#2e2a39",
+        "left_title_color": "#14171f",
+        "left_text_color": "#5f6470",
+        "check_color": "#0d1b4f",
+        "right_bg": "#0d1b4f",
+        "right_title_color": "#ffffff",
+        "right_text_color": "#c3cbe3",
         "x_color": "#e5484d",
-        "annotation_color": "#9b046f",
-        "padding_top": 52,
-        "padding_bottom": 24,
-        "eyebrow_color": "#9b046f",
-        "heading_color": "#2e2a39",
-        "sub_color": "#5c5866",
-        "left_title_color": "#2e2a39",
-        "left_text_color": "#6b6776",
-        "check_color": "#9b046f",
-        "right_title_color": "#fdfbf7",
-        "right_text_color": "#c9c4d2"
+        "annotation_color": "#0d1b4f",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "reviews": {
-      "type": "reviews",
+      "type": "mv-reviews",
       "blocks": {
         "review_1": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Viel bequemer als ich gedacht habe. Schlafe seitdem ruhiger auf der Seite.",
             "author": ""
           }
@@ -183,7 +363,8 @@
         "review_2": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Meine Knie tun morgens nicht mehr so weh. Genau dafür gekauft.",
             "author": ""
           }
@@ -191,7 +372,8 @@
         "review_3": {
           "type": "review",
           "settings": {
-            "rating": 4,
+            "stars": 4,
+            "title": "",
             "text": "Am Anfang etwas ungewohnt, nach 2 Nächten wollte ich es nicht mehr missen.",
             "author": ""
           }
@@ -199,7 +381,8 @@
         "review_4": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Meine Frau hat meins ständig genommen. Musste direkt ein zweites bestellen 😅",
             "author": ""
           }
@@ -207,7 +390,8 @@
         "review_5": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Bleibt tatsächlich zwischen den Beinen und rutscht nicht ständig weg.",
             "author": ""
           }
@@ -215,7 +399,8 @@
         "review_6": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Ich schlafe fast nur auf der Seite und das Kissen macht einen überraschend großen Unterschied.",
             "author": ""
           }
@@ -223,7 +408,8 @@
         "review_7": {
           "type": "review",
           "settings": {
-            "rating": 4,
+            "stars": 4,
+            "title": "",
             "text": "Der Schaum ist etwas fester als erwartet, aber gerade das gefällt mir inzwischen.",
             "author": ""
           }
@@ -231,7 +417,8 @@
         "review_8": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Hatte vorher einfach ein normales Kissen zwischen den Knien. Das hier ist deutlich angenehmer.",
             "author": ""
           }
@@ -239,7 +426,8 @@
         "review_9": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Mein Mann hat erst darüber gelacht. Jetzt benutzt er es öfter als ich.",
             "author": ""
           }
@@ -247,7 +435,8 @@
         "review_10": {
           "type": "review",
           "settings": {
-            "rating": 5,
+            "stars": 5,
+            "title": "",
             "text": "Nach einer Woche sogar noch zufrieden. Normalerweise landen solche Sachen bei mir schnell im Schrank.",
             "author": ""
           }
@@ -266,29 +455,130 @@
         "review_10"
       ],
       "settings": {
-        "eyebrow": "Das sagen unsere Kunden",
-        "heading": "Endlich ruhig auf der Seite schlafen.",
-        "show_summary": true,
-        "badge_text": "",
-        "note": "",
-        "eyebrow_color": "#9b046f",
-        "heading_color": "#2e2a39",
-        "text_color": "#2e2a39",
-        "muted_color": "#6b6776",
-        "card_bg": "#ffffff",
-        "card_border": "#ece4d8",
-        "star_color": "#9b046f",
-        "star_empty_color": "#e3dccf",
-        "padding_top": 52,
-        "padding_bottom": 52
+        "heading": "Das sagen unsere Kunden",
+        "summary_label": "Hervorragend",
+        "summary_score": "4,8 / 5",
+        "bg": "#ffffff",
+        "heading_color": "#0d1b4f",
+        "card_bg": "#f3f3f3",
+        "star_color": "#f5b400",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "faq": {
+      "type": "mv-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "Für wen ist das Kniekissen geeignet?",
+            "answer": "<p>Für alle, die gern auf der Seite schlafen – besonders bei Verspannungen im unteren Rücken oder in der Hüfte, in der Schwangerschaft oder nach langem Sitzen und Stehen.</p>"
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Wie benutze ich das Kissen?",
+            "answer": "<p>In Seitenlage legst du das Kissen einfach zwischen die Knie oder Oberschenkel. So bleiben die Beine parallel und Becken und Wirbelsäule in einer Linie. In Rückenlage kannst du es auch als Stütze unter die Knie legen.</p>"
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Aus welchem Material besteht das Kissen?",
+            "answer": "<p>Der Kern besteht aus formstabilem Memory-Schaum. Der Bezug ist atmungsaktiv und abnehmbar.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Wie reinige ich das Kissen?",
+            "answer": "<p>Den Bezug abnehmen und gemäß Pflegeetikett waschen. Den Schaumkern bitte nicht waschen – einfach ab und zu gut lüften.</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Welche Farben gibt es?",
+            "answer": "<p>Dunkelgrau, Hellgrau, Grün und Marineblau. Im Doppel- und Familienpaket kannst du für jedes Kissen eine eigene Farbe wählen.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "Wie funktioniert der Mengenrabatt?",
+            "answer": "<p>Ab 2 Kissen erhältst du automatisch 20 % Rabatt, ab 3 Kissen 30 %. Der Rabatt wird an der Kasse automatisch abgezogen – ganz ohne Code.</p>"
+          }
+        },
+        "question_7": {
+          "type": "question",
+          "settings": {
+            "question": "Kann ich meine Bestellung zurückgeben?",
+            "answer": "<p>Ja. Du kannst deine Bestellung innerhalb von 14 Tagen nach Erhalt ohne Angabe von Gründen widerrufen. Schreib uns dazu einfach an modavasuport@yahoo.com.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5",
+        "question_6",
+        "question_7"
+      ],
+      "settings": {
+        "heading": "Häufige Fragen",
+        "open_first": false,
+        "bg": "#f7f8fb",
+        "heading_color": "#0d1b4f",
+        "text_color": "#14171f",
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "heading": "Pflichtangaben",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "17908744945a0ffdfc": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_4U6xyG": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_4U6xyG"
+      ],
+      "settings": {
+        "include_margins": true
       }
     }
   },
   "order": [
     "main",
+    "image-text",
+    "relief-cards",
+    "features",
+    "comparison-table",
     "reviews",
+    "faq",
     "disclosures",
-    "related-products",
-    "comparison-table"
+    "17908744945a0ffdfc"
   ]
 }
