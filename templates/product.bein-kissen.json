@@ -168,10 +168,125 @@
         "right_title_color": "#fdfbf7",
         "right_text_color": "#c9c4d2"
       }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Viel bequemer als ich gedacht habe. Schlafe seitdem ruhiger auf der Seite.",
+            "author": ""
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Meine Knie tun morgens nicht mehr so weh. Genau dafür gekauft.",
+            "author": ""
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "text": "Am Anfang etwas ungewohnt, nach 2 Nächten wollte ich es nicht mehr missen.",
+            "author": ""
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Meine Frau hat meins ständig genommen. Musste direkt ein zweites bestellen 😅",
+            "author": ""
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Bleibt tatsächlich zwischen den Beinen und rutscht nicht ständig weg.",
+            "author": ""
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Ich schlafe fast nur auf der Seite und das Kissen macht einen überraschend großen Unterschied.",
+            "author": ""
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "text": "Der Schaum ist etwas fester als erwartet, aber gerade das gefällt mir inzwischen.",
+            "author": ""
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Hatte vorher einfach ein normales Kissen zwischen den Knien. Das hier ist deutlich angenehmer.",
+            "author": ""
+          }
+        },
+        "review_9": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Mein Mann hat erst darüber gelacht. Jetzt benutzt er es öfter als ich.",
+            "author": ""
+          }
+        },
+        "review_10": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Nach einer Woche sogar noch zufrieden. Normalerweise landen solche Sachen bei mir schnell im Schrank.",
+            "author": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8",
+        "review_9",
+        "review_10"
+      ],
+      "settings": {
+        "eyebrow": "Das sagen unsere Kunden",
+        "heading": "Endlich ruhig auf der Seite schlafen.",
+        "show_summary": true,
+        "badge_text": "",
+        "note": "",
+        "eyebrow_color": "#9b046f",
+        "heading_color": "#2e2a39",
+        "text_color": "#2e2a39",
+        "muted_color": "#6b6776",
+        "card_bg": "#ffffff",
+        "card_border": "#ece4d8",
+        "star_color": "#9b046f",
+        "star_empty_color": "#e3dccf",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
+    "reviews",
     "disclosures",
     "related-products",
     "comparison-table"

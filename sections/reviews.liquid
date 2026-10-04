@@ -1,0 +1,282 @@
+{%- comment -%}
+  Kundenbewertungen / Social Proof.
+  Jede Bewertung ist ein Block (Sterne, Text, optional Name).
+  Durchschnitt und Anzahl werden automatisch aus den Blöcken berechnet.
+  Farben passend zur Vergleichstabelle (Modava-Palette).
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+
+{%- liquid
+  assign review_count = 0
+  assign star_sum = 0
+  for block in section.blocks
+    assign review_count = review_count | plus: 1
+    assign star_sum = star_sum | plus: block.settings.rating
+  endfor
+  if review_count > 0
+    assign avg = star_sum | times: 1.0 | divided_by: review_count | round: 1
+    assign avg_pct = avg | times: 20
+  endif
+-%}
+
+<style>
+  #rv-{{ sid }} {
+    --rv-page-bg: {{ section.settings.page_bg }};
+    --rv-card-bg: {{ section.settings.card_bg }};
+    --rv-card-border: {{ section.settings.card_border }};
+    --rv-star: {{ section.settings.star_color }};
+    --rv-star-empty: {{ section.settings.star_empty_color }};
+    --rv-eyebrow: {{ section.settings.eyebrow_color }};
+    --rv-heading: {{ section.settings.heading_color }};
+    --rv-text: {{ section.settings.text_color }};
+    --rv-muted: {{ section.settings.muted_color }};
+    background: {% if section.settings.page_bg != blank %}var(--rv-page-bg){% else %}transparent{% endif %};
+    padding: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px 0 {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    font-family: var(--font-body-family, 'Poppins'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--rv-heading);
+  }
+  @media screen and (min-width: 750px) {
+    #rv-{{ sid }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  #rv-{{ sid }} *,
+  #rv-{{ sid }} *::before,
+  #rv-{{ sid }} *::after { box-sizing: border-box; }
+
+  #rv-{{ sid }} .rv__inner { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+  #rv-{{ sid }} .rv__head { text-align: center; margin: 0 auto 32px; max-width: 700px; }
+  #rv-{{ sid }} .rv__eyebrow {
+    margin: 0 0 14px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--rv-eyebrow);
+  }
+  #rv-{{ sid }} .rv__heading {
+    margin: 0 0 18px;
+    font-family: var(--font-heading-family, inherit);
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--rv-heading);
+  }
+
+  #rv-{{ sid }} .rv__summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #rv-{{ sid }} .rv__avg { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--rv-heading); }
+  #rv-{{ sid }} .rv__count { font-size: 13px; color: var(--rv-muted); }
+
+  /* Sterne: graue Grundreihe, darüber die farbige Reihe mit Breite = Bewertung */
+  #rv-{{ sid }} .rv__stars { position: relative; display: inline-block; line-height: 0; }
+  #rv-{{ sid }} .rv__stars-row { display: flex; gap: 2px; }
+  #rv-{{ sid }} .rv__stars-row svg { width: var(--rv-star-size, 16px); height: var(--rv-star-size, 16px); flex: 0 0 auto; }
+  #rv-{{ sid }} .rv__stars-row--base { color: var(--rv-star-empty); }
+  #rv-{{ sid }} .rv__stars-row--fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    overflow: hidden;
+    color: var(--rv-star);
+  }
+  #rv-{{ sid }} .rv__summary .rv__stars { --rv-star-size: 20px; }
+
+  #rv-{{ sid }} .rv__list {
+    column-count: 3;
+    column-gap: 16px;
+  }
+  #rv-{{ sid }} .rv__card {
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 16px;
+    padding: 20px 20px 18px;
+    background: var(--rv-card-bg);
+    border: 1px solid var(--rv-card-border);
+    border-radius: 12px;
+  }
+  #rv-{{ sid }} .rv__card .rv__stars { --rv-star-size: 15px; margin-bottom: 12px; }
+  #rv-{{ sid }} .rv__quote {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--rv-text);
+    quotes: "„" "“";
+  }
+  #rv-{{ sid }} .rv__quote::before { content: open-quote; }
+  #rv-{{ sid }} .rv__quote::after { content: close-quote; }
+  #rv-{{ sid }} .rv__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: var(--rv-muted);
+  }
+  #rv-{{ sid }} .rv__name { font-weight: 600; color: var(--rv-heading); }
+  #rv-{{ sid }} .rv__badge { display: inline-flex; align-items: center; gap: 4px; }
+  #rv-{{ sid }} .rv__badge svg { width: 13px; height: 13px; color: var(--rv-star); }
+
+  #rv-{{ sid }} .rv__hint { display: none; margin: 10px 0 0; text-align: center; font-size: 11.5px; color: var(--rv-muted); }
+  #rv-{{ sid }} .rv__note { margin: 8px 0 0; text-align: center; font-size: 11.5px; color: var(--rv-muted); }
+
+  @media screen and (max-width: 989px) {
+    #rv-{{ sid }} .rv__list { column-count: 2; }
+  }
+
+  /* Mobil: horizontal wischbare Karten */
+  @media screen and (max-width: 749px) {
+    #rv-{{ sid }} .rv__inner { padding: 0; }
+    #rv-{{ sid }} .rv__head { margin-bottom: 22px; padding: 0 16px; }
+    #rv-{{ sid }} .rv__heading { font-size: 27px; }
+    #rv-{{ sid }} .rv__list {
+      column-count: initial;
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 16px;
+      padding: 0 16px 6px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #rv-{{ sid }} .rv__list::-webkit-scrollbar { display: none; }
+    #rv-{{ sid }} .rv__card {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 82%;
+      margin: 0;
+      scroll-snap-align: start;
+    }
+    #rv-{{ sid }} .rv__meta { margin-top: auto; padding-top: 14px; }
+    #rv-{{ sid }} .rv__quote { font-size: 14px; }
+    #rv-{{ sid }} .rv__hint { display: block; }
+    #rv-{{ sid }} .rv__note { padding: 0 16px; }
+  }
+</style>
+
+{%- capture star_svgs -%}
+  {%- for i in (1..5) -%}
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg>
+  {%- endfor -%}
+{%- endcapture -%}
+
+<div id="rv-{{ sid }}" class="rv">
+  <div class="rv__inner">
+    <div class="rv__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="rv__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rv__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.show_summary and review_count > 0 -%}
+        <div class="rv__summary">
+          <span class="rv__stars" role="img" aria-label="{{ avg }} von 5 Sternen">
+            <span class="rv__stars-row rv__stars-row--base">{{ star_svgs }}</span>
+            <span class="rv__stars-row rv__stars-row--fill" style="width: {{ avg_pct }}%;">{{ star_svgs }}</span>
+          </span>
+          <span class="rv__avg">{{ avg | append: '' | replace: '.', ',' }}</span>
+          <span class="rv__count">
+            aus {{ review_count }} {% if review_count == 1 %}Bewertung{% else %}Bewertungen{% endif %}
+          </span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="rv__list">
+      {%- for block in section.blocks -%}
+        {%- assign pct = block.settings.rating | times: 20 -%}
+        <figure class="rv__card" {{ block.shopify_attributes }}>
+          <span class="rv__stars" role="img" aria-label="{{ block.settings.rating }} von 5 Sternen">
+            <span class="rv__stars-row rv__stars-row--base">{{ star_svgs }}</span>
+            <span class="rv__stars-row rv__stars-row--fill" style="width: {{ pct }}%;">{{ star_svgs }}</span>
+          </span>
+          <blockquote class="rv__quote">{{ block.settings.text | escape }}</blockquote>
+          {%- if block.settings.author != blank or section.settings.badge_text != blank -%}
+            <figcaption class="rv__meta">
+              {%- if block.settings.author != blank -%}
+                <span class="rv__name">{{ block.settings.author | escape }}</span>
+              {%- endif -%}
+              {%- if section.settings.badge_text != blank -%}
+                <span class="rv__badge">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M5.2 8.2l1.9 1.9 3.8-4"/></svg>
+                  {{ section.settings.badge_text | escape }}
+                </span>
+              {%- endif -%}
+            </figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      <p class="rv__hint" aria-hidden="true">← Wischen für mehr Bewertungen →</p>
+    {%- endif -%}
+    {%- if section.settings.note != blank -%}
+      <p class="rv__note">{{ section.settings.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kundenbewertungen",
+  "tag": "section",
+  "class": "section section-reviews",
+  "settings": [
+    { "type": "header", "content": "Überschrift" },
+    { "type": "text", "id": "eyebrow", "label": "Kleine Überzeile", "default": "Das sagen unsere Kunden" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Endlich ruhig auf der Seite schlafen." },
+    { "type": "checkbox", "id": "show_summary", "label": "Durchschnittsbewertung anzeigen", "info": "Wird automatisch aus den Bewertungen berechnet", "default": true },
+    { "type": "header", "content": "Karten" },
+    { "type": "text", "id": "badge_text", "label": "Hinweis unter jeder Bewertung", "info": "z. B. „Verifizierter Kauf“ – nur verwenden, wenn das stimmt. Leer lassen = kein Hinweis." },
+    { "type": "text", "id": "note", "label": "Fußnote", "info": "Optionaler Hinweis unter den Bewertungen, z. B. woher sie stammen" },
+    { "type": "header", "content": "Farben" },
+    { "type": "color", "id": "page_bg", "label": "Hintergrund", "info": "Leer lassen = Hintergrund des Shops" },
+    { "type": "color", "id": "eyebrow_color", "label": "Überzeile", "default": "#9b046f" },
+    { "type": "color", "id": "heading_color", "label": "Überschrift / Name", "default": "#2e2a39" },
+    { "type": "color", "id": "text_color", "label": "Bewertungstext", "default": "#2e2a39" },
+    { "type": "color", "id": "muted_color", "label": "Nebentext", "default": "#6b6776" },
+    { "type": "color", "id": "card_bg", "label": "Karte", "default": "#ffffff" },
+    { "type": "color", "id": "card_border", "label": "Kartenrand", "default": "#ece4d8" },
+    { "type": "color", "id": "star_color", "label": "Sterne", "default": "#9b046f" },
+    { "type": "color", "id": "star_empty_color", "label": "Leere Sterne", "default": "#e3dccf" },
+    { "type": "header", "content": "Abstände" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 52 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Bewertung",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Sterne", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Bewertungstext", "default": "Super Kissen, sehr bequem." },
+        { "type": "text", "id": "author", "label": "Name (optional)", "info": "z. B. „Anna K.“ – leer lassen, wenn kein Name bekannt ist" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kundenbewertungen",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}
