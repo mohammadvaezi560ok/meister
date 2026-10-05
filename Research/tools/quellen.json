@@ -1,0 +1,46 @@
+{
+  "_hinweis": "Hier alle Quellen eintragen. Das Skript download_research.py liest diese Datei. Eintraege mit leerer URL werden uebersprungen.",
+
+  "shopify_shops": [
+    {"name": "Nourial", "url": "https://nourial.com/products/nourial-leg-alignment-pillow"},
+    {"name": "Modava (eigener Shop)", "url": ""},
+    {"name": "Cushion Lab", "url": "https://thecushionlab.com/products/cushion-lab-extra-dense-knee-pillow"},
+    {"name": "Husband Pillow", "url": "https://www.husbandpillow.com/products/leg-and-knee-spacer-memory-foam-pillow-with-strap-eye-mask"}
+  ],
+
+  "andere_produktseiten": [
+    {"name": "Revoget (OnShopBase)", "url": "https://shopitor.onshopbase.com/products/revoget-alignment-pillows-relieve-hip-pain-sciatica-leg-alignment-pillow-for-side-sleepers-sleep-pain-free-from-hip-back-aches"},
+    {"name": "Amazon GDSAFS Leg Alignment Pillow", "url": "https://www.amazon.com/GDSAFS-Leg-Alignment-Pillow-Sciatica/dp/B0D4QWVS1C"},
+    {"name": "Amazon Hip Alignment Pillow", "url": "https://www.amazon.com/Hip-Alignment-Pillow-Side-Sleepers/dp/B0F8J9F3HT"},
+    {"name": "Amazon KOKIXEOT Knee Pillow Strap", "url": "https://www.amazon.com/clp/B0F99HXB8L"},
+    {"name": "Kaufland Kniekissen 1", "url": "https://www.kaufland.de/product/569568111/"},
+    {"name": "Kaufland Kniekissen 2", "url": "https://www.kaufland.de/product/368020070/"},
+    {"name": "Kaufland Kniekissen 3", "url": "https://www.kaufland.de/product/499464361/"}
+  ],
+
+  "aliexpress_ids": ["1005008280256176"],
+
+  "meta_ad_library_suchbegriffe": [
+    "nourial",
+    "leg alignment pillow",
+    "knee pillow side sleeper",
+    "Kniekissen",
+    "Seitenschläferkissen Knie",
+    "sciatica pillow"
+  ],
+
+  "tiktok": [
+    "https://www.tiktok.com/tag/kneepillow",
+    "https://www.tiktok.com/tag/legalignmentpillow",
+    "https://www.tiktok.com/tag/kniekissen",
+    "https://www.tiktok.com/tag/sidesleeper",
+    "https://www.tiktok.com/tag/hippainrelief"
+  ],
+
+  "instagram": [
+    "https://www.instagram.com/explore/tags/kneepillow/",
+    "https://www.instagram.com/explore/tags/legalignmentpillow/"
+  ],
+
+  "_tipp_social": "Konkrete Video-Links (z. B. https://www.tiktok.com/@user/video/123...) einfach in die Listen tiktok/instagram dazuschreiben. Profile (https://www.tiktok.com/@nourial) gehen auch."
+}
