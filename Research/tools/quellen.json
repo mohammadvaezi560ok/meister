@@ -1,0 +1,22 @@
+{
+  "_info": "Quellenliste für tools/download.py. Neue Shops/Videos einfach hier ergänzen.",
+  "seiten": [
+    {"shop": "nourial",        "art": "shop",        "url": "https://nourial.com/products/nourial-leg-alignment-pillow"},
+    {"shop": "nourial",        "art": "advertorial", "url": "https://nourial.com/pages/adv-alignment-pillow-v4"},
+    {"shop": "aliexpress",     "art": "shop",        "url": "https://de.aliexpress.com/item/1005008280256176.html"},
+    {"shop": "aflorest",       "art": "shop",        "url": "https://aflorest.com/products/nourial-leg-alignment-pillow-feel-the-deep-relief-from-your-first-night"},
+    {"shop": "nourialpillow",  "art": "bewertungen", "url": "https://nourialpillow.com/customer-reviews/"},
+    {"shop": "husbandpillow",  "art": "shop",        "url": "https://www.husbandpillow.com/products/leg-and-knee-spacer-memory-foam-pillow-with-strap-eye-mask"},
+    {"shop": "walmart",        "art": "bewertungen", "url": "https://www.walmart.com/reviews/product/3104489985"},
+    {"shop": "walmart",        "art": "shop",        "url": "https://www.walmart.com/ip/19299555264"},
+    {"shop": "amazon-ujpfeo",  "art": "shop",        "url": "https://www.amazon.com/clp/B0DQP19KN2"},
+    {"shop": "amazon-dailycuddles", "art": "shop",   "url": "https://www.amazon.com/clp/B0G5ZGPB65"},
+    {"shop": "amazon-lvopo",   "art": "shop",        "url": "https://www.amazon.com/clp/B08P6N3DKJ"},
+    {"shop": "meta-adlibrary", "art": "ads",         "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&q=nourial&search_type=keyword_unordered"},
+    {"shop": "meta-adlibrary", "art": "ads",         "url": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=DE&q=kniekissen&search_type=keyword_unordered"}
+  ],
+  "videos": [
+    "https://www.youtube.com/watch?v=fZWqiDSL2AA",
+    "https://www.youtube.com/watch?v=5uWVm4kKriA"
+  ]
+}
