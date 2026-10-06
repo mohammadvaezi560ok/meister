@@ -1,22 +1,41 @@
 {
-  "_info": "Quellenliste für tools/download.py. Neue Shops/Videos einfach hier ergänzen.",
+  "_info": "Quellenliste für tools/download.py (seiten, videos) und tools/meta_ads.py (meta_ads). Neue Shops/Videos einfach hier ergänzen.",
   "seiten": [
-    {"shop": "nourial",        "art": "shop",        "url": "https://nourial.com/products/nourial-leg-alignment-pillow"},
-    {"shop": "nourial",        "art": "advertorial", "url": "https://nourial.com/pages/adv-alignment-pillow-v4"},
-    {"shop": "aliexpress",     "art": "shop",        "url": "https://de.aliexpress.com/item/1005008280256176.html"},
-    {"shop": "aflorest",       "art": "shop",        "url": "https://aflorest.com/products/nourial-leg-alignment-pillow-feel-the-deep-relief-from-your-first-night"},
-    {"shop": "nourialpillow",  "art": "bewertungen", "url": "https://nourialpillow.com/customer-reviews/"},
-    {"shop": "husbandpillow",  "art": "shop",        "url": "https://www.husbandpillow.com/products/leg-and-knee-spacer-memory-foam-pillow-with-strap-eye-mask"},
-    {"shop": "walmart",        "art": "bewertungen", "url": "https://www.walmart.com/reviews/product/3104489985"},
-    {"shop": "walmart",        "art": "shop",        "url": "https://www.walmart.com/ip/19299555264"},
-    {"shop": "amazon-ujpfeo",  "art": "shop",        "url": "https://www.amazon.com/clp/B0DQP19KN2"},
-    {"shop": "amazon-dailycuddles", "art": "shop",   "url": "https://www.amazon.com/clp/B0G5ZGPB65"},
-    {"shop": "amazon-lvopo",   "art": "shop",        "url": "https://www.amazon.com/clp/B08P6N3DKJ"},
-    {"shop": "meta-adlibrary", "art": "ads",         "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&q=nourial&search_type=keyword_unordered"},
-    {"shop": "meta-adlibrary", "art": "ads",         "url": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=DE&q=kniekissen&search_type=keyword_unordered"}
+    {"shop": "nourial",         "art": "shop",        "url": "https://nourial.com/products/nourial-leg-alignment-pillow"},
+    {"shop": "nourial",         "art": "advertorial", "url": "https://nourial.com/pages/adv-alignment-pillow-v4"},
+    {"shop": "nourial",         "art": "advertorial", "url": "https://try.nourial.com/knee-pillow-v10"},
+    {"shop": "nourial",         "art": "advertorial", "url": "https://nourial.com/pages/listicle-knee-pillow-v1"},
+    {"shop": "nourial",         "art": "advertorial", "url": "https://nourial.com/pages/knee-pillow-lst-01"},
+    {"shop": "nourialpillow",   "art": "bewertungen", "url": "https://nourialpillow.com/customer-reviews/"},
+    {"shop": "aflorest",        "art": "shop",        "url": "https://aflorest.com/products/nourial-leg-alignment-pillow-feel-the-deep-relief-from-your-first-night"},
+    {"shop": "comfysleepers",   "art": "shop",        "url": "https://comfysleepers.com/products/alignment-pillow"},
+    {"shop": "nordyckikomfort", "art": "shop",        "url": "https://nordyckikomfort.com/products/nourial-leg-alignment-pillow"},
+    {"shop": "cellsius",        "art": "shop",        "url": "https://cellsius-germany.com/products/cellsius-orthopadisches-kniekissen"},
+    {"shop": "cellsius",        "art": "advertorial", "url": "https://cellsius-germany.com/pages/ischias_schmerzen_weg_kniekissen_adv_fun001_sciatica"},
+    {"shop": "husbandpillow",   "art": "shop",        "url": "https://www.husbandpillow.com/products/leg-and-knee-spacer-memory-foam-pillow-with-strap-eye-mask"}
   ],
+  "_manuell": {
+    "_info": "Diese Seiten blockieren automatische Browser (Captcha bzw. Bot-Zwischenseite) – nur von Hand im eigenen Browser sichern.",
+    "aliexpress": "https://de.aliexpress.com/item/1005008280256176.html",
+    "walmart": ["https://www.walmart.com/ip/19299555264", "https://www.walmart.com/reviews/product/3104489985"],
+    "amazon": ["https://www.amazon.com/dp/B0HHFH29BQ", "https://www.amazon.com/dp/B0GQTJ9PZ5", "https://www.amazon.com/dp/B0DQP19KN2",
+               "https://www.amazon.com/dp/B0G5ZGPB65", "https://www.amazon.com/dp/B08P6N3DKJ"]
+  },
+  "meta_ads": [
+    {"_name": "Nourial Journal",       "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=106206482105094&media_type=all&search_type=page"},
+    {"_name": "Modern Health Journal", "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=103259619184154&media_type=all&search_type=page"},
+    {"_name": "Gary Whitfield",        "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=206625713447784&media_type=all&search_type=page"},
+    {"_name": "Suche \"nourial\"",     "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&q=%22nourial%22&search_type=keyword_exact_phrase&media_type=all"},
+    {"_name": "Suche nordyckikomfort", "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&q=nordyckikomfort&search_type=keyword_unordered&media_type=all"},
+    {"_name": "Suche kniekissen DE",   "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=DE&q=kniekissen&search_type=keyword_unordered&media_type=all"},
+    {"_name": "Suche \"knee alignment pillow\"", "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&q=%22knee%20alignment%20pillow%22&search_type=keyword_exact_phrase&media_type=all"}
+  ],
+  "_videos_info": "YouTube verlangt aus Rechenzentren einen Login – lokal ausführen (ggf. yt-dlp mit --cookies-from-browser). Die TikTok-Funde stehen in 03_Videos/videos.csv.",
   "videos": [
     "https://www.youtube.com/watch?v=fZWqiDSL2AA",
-    "https://www.youtube.com/watch?v=5uWVm4kKriA"
+    "https://www.youtube.com/watch?v=Ye8M08CwhoQ",
+    "https://www.youtube.com/watch?v=Y5jIeiFEJ4I",
+    "https://www.youtube.com/watch?v=8BOya-cI20g",
+    "https://www.youtube.com/watch?v=ImFF3t6wBCI"
   ]
 }

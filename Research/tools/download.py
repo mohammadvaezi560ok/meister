@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ORDNER = {
     "produkt": ROOT / "01_Produktbilder",
     "bewertung": ROOT / "02_Bewertungen",
-    "video": ROOT / "03_Videos",
+    "video": ROOT / "03_Videos" / "shop-videos",
     "ads": ROOT / "04_Ads",
     "screenshot": ROOT / "05_Screenshots",
     "advertorial": ROOT / "06_Landingpages",
@@ -149,10 +149,14 @@ def seite_verarbeiten(page, eintrag: dict, ablage: Ablage):
         page.wait_for_timeout(400)
     for knopf in ("Load more", "Mehr anzeigen", "Show more", "See more", "Weitere Bewertungen"):
         for _ in range(5):
+            page.keyboard.press("Escape")  # Newsletter-/Rabatt-Popups schließen, sie blockieren sonst Klicks
             el = page.get_by_text(knopf, exact=False).first
             if not el.count() or not el.is_visible():
                 break
-            el.click()
+            try:
+                el.click(timeout=5000)
+            except Exception:  # Knopf verdeckt/instabil – Seite trotzdem weiter verarbeiten
+                break
             page.wait_for_timeout(1500)
 
     shot = ORDNER["screenshot"] / f"{shop}__{art}__{len(list(ORDNER['screenshot'].glob(f'{shop}__*'))) + 1:02d}.png"
@@ -194,7 +198,7 @@ def seite_verarbeiten(page, eintrag: dict, ablage: Ablage):
 
 
 def videos_laden(urls: list[str]):
-    ziel = ORDNER["video"]
+    ziel = ROOT / "03_Videos" / "youtube"
     ziel.mkdir(parents=True, exist_ok=True)
     for u in urls:
         print(f"\n== Video {u}")
